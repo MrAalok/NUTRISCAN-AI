@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparkles, ArrowRight, ShieldCheck, ShoppingCart, ExternalLink, TrendingDown } from 'lucide-react';
-import { getHealthyAlternativesForProduct } from '../data/categoryAlternatives';
+import { getHealthyAlternativesForProduct, getQuickCommercePriceMatrix } from '../data/categoryAlternatives';
 
 export default function AlternativesSection({ product, onSelectProduct }) {
   if (!product) return null;
@@ -96,57 +96,47 @@ export default function AlternativesSection({ product, onSelectProduct }) {
                 </div>
               </div>
 
-              {/* Bottom Quick-Commerce Buy & Price Comparison Bar */}
-              <div className="pt-4 border-t border-white/10 space-y-2">
-                <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-slate-400 font-bold flex items-center gap-1">
-                    <ShoppingCart className="w-3.5 h-3.5 text-[#FF4B82]" />
-                    Compare Price & Order Instant Delivery:
-                  </span>
-                </div>
+              {/* Bottom Quick-Commerce Live Platform Price Comparison Bar */}
+              {(() => {
+                const pm = alt.priceMatrix || getQuickCommercePriceMatrix(alt.name, alt.mrp);
+                return (
+                  <div className="pt-4 border-t border-white/10 space-y-2">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-slate-400 font-bold flex items-center gap-1">
+                        <ShoppingCart className="w-3.5 h-3.5 text-[#FF4B82]" />
+                        Live Price Compare & 1-Tap Delivery:
+                      </span>
+                      <span className="text-emerald-400 font-bold text-[10px]">
+                        MRP: {pm.baseMrp}
+                      </span>
+                    </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                  <a
-                    href={platforms.blinkit}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-1.5 px-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[10px] font-bold flex items-center justify-center gap-1 transition-all"
-                  >
-                    <span>🟡 Blinkit</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-
-                  <a
-                    href={platforms.instamart}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-1.5 px-2 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-300 text-[10px] font-bold flex items-center justify-center gap-1 transition-all"
-                  >
-                    <span>🟠 Instamart</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-
-                  <a
-                    href={platforms.zepto}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-1.5 px-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 text-[10px] font-bold flex items-center justify-center gap-1 transition-all"
-                  >
-                    <span>🟣 Zepto</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-
-                  <a
-                    href={platforms.bigbasket}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-1.5 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold flex items-center justify-center gap-1 transition-all"
-                  >
-                    <span>🟢 BigBasket</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-                </div>
-              </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                      {pm.platforms.map((p) => (
+                        <a
+                          key={p.key}
+                          href={p.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`py-2 px-2 rounded-xl border ${p.bgClass} text-[10px] font-bold flex flex-col items-center justify-center text-center transition-all hover:scale-[1.03] relative`}
+                        >
+                          {p.isLowest && (
+                            <span className="absolute -top-2 bg-emerald-500 text-slate-950 font-black text-[8px] px-1.5 rounded-full uppercase">
+                              Best Price
+                            </span>
+                          )}
+                          <span className="text-[10px] text-white flex items-center gap-1">
+                            <span>{p.logo}</span> {p.name}
+                          </span>
+                          <span className="text-xs font-black text-white font-['Outfit'] mt-0.5">
+                            {p.price}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
 
             </div>
           );

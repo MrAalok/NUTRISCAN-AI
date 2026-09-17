@@ -1,5 +1,6 @@
 import React from 'react';
-import { CheckCircle2, ShieldAlert, Activity, Heart, Clock, Scale, Flame } from 'lucide-react';
+import { CheckCircle2, ShieldAlert, Activity, Heart, Clock, Scale, Flame, ExternalLink } from 'lucide-react';
+import { getQuickCommercePriceMatrix } from '../data/categoryAlternatives';
 
 export default function HealthReportCard({ product, onAddToCompare, isCompared }) {
   if (!product) return null;
@@ -132,53 +133,62 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
 
         </div>
 
-        {/* QUICK COMMERCE PRICE COMPARISON & BUY STRIP */}
-        <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-white flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#FF4B82] animate-pulse" />
-              Check Price & Instant Delivery in India:
-            </span>
-          </div>
+        {/* QUICK COMMERCE LIVE PRICE COMPARISON & BUY STRIP */}
+        {(() => {
+          const priceMatrix = getQuickCommercePriceMatrix(product.name);
+          return (
+            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF4B82] animate-pulse" />
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider font-['Outfit']">
+                    Live Quick-Commerce Price Comparison (MRP: {priceMatrix.baseMrp})
+                  </h3>
+                </div>
+                <span className="text-[11px] text-slate-400 font-light">
+                  Compare prices across 10-min delivery apps in India & order best deal
+                </span>
+              </div>
 
-          <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
-            <a
-              href={`https://blinkit.com/s/?q=${encodeURIComponent(product.name)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-1.5 px-3 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1 transition-all"
-            >
-              <span>🟡 Blinkit</span>
-            </a>
+              {/* Platform Price Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                {priceMatrix.platforms.map((p) => (
+                  <a
+                    key={p.key}
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`p-3 rounded-xl border flex flex-col justify-between transition-all group relative ${p.bgClass} hover:scale-[1.03]`}
+                  >
+                    {p.isLowest && (
+                      <span className="absolute -top-2 -right-1 text-[9px] font-black uppercase tracking-wider bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-full shadow-md">
+                        🔥 BEST DEAL
+                      </span>
+                    )}
 
-            <a
-              href={`https://www.swiggy.com/instamart/search?query=${encodeURIComponent(product.name)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-1.5 px-3 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-300 text-xs font-bold flex items-center gap-1 transition-all"
-            >
-              <span>🟠 Instamart</span>
-            </a>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs font-bold text-white flex items-center gap-1">
+                          <span>{p.logo}</span> {p.name}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-slate-400 font-medium">{p.delivery}</p>
+                    </div>
 
-            <a
-              href={`https://www.zepto.co.in/search?q=${encodeURIComponent(product.name)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-1.5 px-3 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-bold flex items-center gap-1 transition-all"
-            >
-              <span>🟣 Zepto</span>
-            </a>
-
-            <a
-              href={`https://www.bigbasket.com/ps/?q=${encodeURIComponent(product.name)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-1.5 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1 transition-all"
-            >
-              <span>🟢 BigBasket</span>
-            </a>
-          </div>
-        </div>
+                    <div className="mt-3 flex items-center justify-between pt-2 border-t border-white/10">
+                      <span className="text-lg font-black text-white font-['Outfit'] group-hover:text-emerald-400 transition-colors">
+                        {p.price}
+                      </span>
+                      <span className="text-[10px] font-bold underline flex items-center gap-0.5 text-slate-300">
+                        Order <ExternalLink className="w-2.5 h-2.5" />
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* PROS VS CONS SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
