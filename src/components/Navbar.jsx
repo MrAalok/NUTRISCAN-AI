@@ -4,7 +4,7 @@ import { ShieldCheck, Scan, Sparkles, Scale, HeartPulse, DollarSign, UserCheck, 
 export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, comparisonCount, onOpenComparison }) {
   const navItems = [
     { id: 'scanner', label: 'Scanner', icon: Scan },
-    ...(hasScannedProduct ? [{ id: 'report', label: 'Health Report', icon: FileText }] : []),
+    { id: 'report', label: 'Health Report', icon: FileText },
     { id: 'disease', label: 'Disease Risks', icon: HeartPulse },
     { id: 'additives', label: 'E-Numbers', icon: Sparkles },
     { id: 'alternatives', label: 'Health Swaps', icon: Layers },
@@ -14,22 +14,34 @@ export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, com
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-[#090D16]/95 border-b border-white/10 px-3 sm:px-6 py-2.5 transition-all">
+    <header 
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 5000,
+        backgroundColor: '#090D16',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        padding: '10px 16px'
+      }}
+      className="w-full"
+    >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
         
         {/* Brand Logo */}
         <div 
           onClick={() => setActiveTab('scanner')}
-          className="flex items-center gap-2 cursor-pointer group shrink-0"
+          className="flex items-center gap-2.5 cursor-pointer group shrink-0"
         >
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#FF4B82] via-[#8B5CF6] to-[#3B82F6] p-0.5 shadow-lg shadow-[#FF4B82]/20 group-hover:scale-105 transition-transform">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FF4B82] via-[#8B5CF6] to-[#3B82F6] p-0.5 shadow-lg shadow-[#FF4B82]/20 group-hover:scale-105 transition-transform">
             <div className="w-full h-full bg-[#090D16] rounded-[10px] flex items-center justify-center">
-              <Scan className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4B82]" />
+              <Scan className="w-4 h-4 text-[#FF4B82]" />
             </div>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-base sm:text-xl tracking-tight text-white font-['Outfit']">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white font-['Outfit']">
                 NUTRISCAN <span className="gradient-text">AI</span>
               </span>
               <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.2 rounded-full bg-[#FF4B82]/20 text-[#FF4B82] border border-[#FF4B82]/30">
@@ -75,10 +87,10 @@ export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, com
             onClick={onOpenComparison}
             className="relative btn-secondary py-1 px-2.5 sm:py-1.5 sm:px-3 text-xs font-semibold"
           >
-            <Scale className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FF4B82]" />
+            <Scale className="w-3.5 h-3.5 text-[#FF4B82]" />
             <span className="text-xs">Compare</span>
             {comparisonCount > 0 && (
-              <span className="ml-1 w-4 h-4 sm:w-5 sm:h-5 bg-[#FF4B82] text-white font-bold text-[9px] sm:text-[10px] rounded-full flex items-center justify-center animate-bounce">
+              <span className="ml-1 w-4 h-4 bg-[#FF4B82] text-white font-bold text-[9px] rounded-full flex items-center justify-center animate-bounce">
                 {comparisonCount}
               </span>
             )}

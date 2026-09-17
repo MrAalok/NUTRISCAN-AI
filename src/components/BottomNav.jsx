@@ -4,7 +4,7 @@ import { Scan, FileText, HeartPulse, Sparkles, Layers, DollarSign } from 'lucide
 export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }) {
   const navItems = [
     { id: 'scanner', label: 'Scan', icon: Scan },
-    ...(hasScannedProduct ? [{ id: 'report', label: 'Report', icon: FileText }] : []),
+    { id: 'report', label: 'Report', icon: FileText },
     { id: 'disease', label: 'Disease', icon: HeartPulse },
     { id: 'additives', label: 'Additives', icon: Sparkles },
     { id: 'alternatives', label: 'Swaps', icon: Layers },
@@ -12,7 +12,25 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#060911]/95 border-t border-white/10 backdrop-blur-xl px-2 py-2 flex items-center justify-around shadow-2xl">
+    <div 
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+        backgroundColor: '#060911',
+        borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        padding: '8px 12px',
+        display: 'flex',
+        alignItems: 'center',
+        justify: 'space-around',
+        boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.7)'
+      }}
+      className="md:hidden"
+    >
       {navItems.map((item) => {
         const Icon = item.icon;
         const isActive = activeTab === item.id;
@@ -20,14 +38,22 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all ${
-              isActive
-                ? 'bg-gradient-to-r from-[#FF4B82] to-[#8B5CF6] text-white shadow-lg shadow-[#FF4B82]/30 scale-105'
-                : 'text-slate-400 hover:text-white'
-            }`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '6px 10px',
+              borderRadius: '12px',
+              border: 'none',
+              background: isActive ? 'linear-gradient(135deg, #FF4B82 0%, #8B5CF6 100%)' : 'transparent',
+              color: isActive ? '#FFFFFF' : '#94A3B8',
+              boxShadow: isActive ? '0 4px 15px rgba(255, 75, 130, 0.4)' : 'none',
+              transition: 'all 0.2s ease'
+            }}
           >
-            <Icon className="w-4 h-4 mb-0.5" />
-            <span className="text-[10px] font-bold tracking-tight">{item.label}</span>
+            <Icon style={{ width: '18px', height: '18px', marginBottom: '2px' }} />
+            <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '-0.02em' }}>{item.label}</span>
           </button>
         );
       })}
