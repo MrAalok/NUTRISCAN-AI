@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { Scan, HeartPulse, Sparkles, Layers, Database, UserCheck, DollarSign, ArrowRight, ArrowLeft, Activity } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 import Navbar from './components/Navbar';
+import BottomNav from './components/BottomNav';
 import ScannerHero from './components/ScannerHero';
 import HealthReportCard from './components/HealthReportCard';
 import DiseaseMatrix from './components/DiseaseMatrix';
@@ -58,7 +59,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090D16] text-white selection:bg-[#FF4B82] selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#090D16] text-white selection:bg-[#FF4B82] selection:text-white pb-16 md:pb-0">
       
       {/* Top Glass Navigation Header */}
       <Navbar
@@ -71,50 +72,49 @@ export default function App() {
 
       {/* Sub Header Product Context Strip */}
       {selectedProduct && activeTab !== 'scanner' && activeTab !== 'sources' && activeTab !== 'founder' && activeTab !== 'pricing' && (
-        <div className="bg-[#121826]/95 border-b border-white/10 py-3 px-4 sticky top-[60px] z-40 backdrop-blur-md">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-3 min-w-0">
+        <div className="bg-[#121826]/95 border-b border-white/10 py-2.5 px-3 sticky top-[52px] sm:top-[60px] z-40 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="flex items-center gap-2 min-w-0">
               <button
                 onClick={() => setActiveTab('scanner')}
-                className="btn-secondary py-1 px-3 text-xs flex items-center gap-1.5 shrink-0"
+                className="btn-secondary py-1 px-2.5 text-xs flex items-center gap-1 shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Scan New Packet</span>
+                <span>Scan New</span>
               </button>
               
-              <div className="flex items-center gap-2 truncate">
-                <span className="text-slate-400">Selected Item:</span>
+              <div className="flex items-center gap-1.5 truncate">
                 <span className="font-bold text-white font-['Outfit'] truncate">{selectedProduct.name}</span>
-                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${
+                <span className={`text-[9px] font-bold px-2 py-0.2 rounded-full shrink-0 ${
                   selectedProduct.rating === 'Green' ? 'badge-green' : selectedProduct.rating === 'Yellow' ? 'badge-yellow' : 'badge-red'
                 }`}>
-                  Score: {selectedProduct.score}/100
+                  {selectedProduct.score}/100
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-1.5">
               <button
                 onClick={() => setActiveTab('report')}
-                className={`px-3 py-1 rounded-lg font-medium transition-all ${activeTab === 'report' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'report' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
               >
                 Report
               </button>
               <button
                 onClick={() => setActiveTab('disease')}
-                className={`px-3 py-1 rounded-lg font-medium transition-all ${activeTab === 'disease' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'disease' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
               >
-                Disease Risks
+                Disease
               </button>
               <button
                 onClick={() => setActiveTab('additives')}
-                className={`px-3 py-1 rounded-lg font-medium transition-all ${activeTab === 'additives' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'additives' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
               >
                 Additives
               </button>
               <button
                 onClick={() => setActiveTab('alternatives')}
-                className={`px-3 py-1 rounded-lg font-medium transition-all ${activeTab === 'alternatives' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'alternatives' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
               >
                 Swaps
               </button>
@@ -124,7 +124,7 @@ export default function App() {
       )}
 
       {/* Main Container - DEDICATED SINGLE-PURPOSE SCREENS */}
-      <main className="flex-1 py-8">
+      <main className="flex-1 py-4 sm:py-8">
         
         {/* PAGE 1: AI Scanner Studio Only (Zero clutter) */}
         {activeTab === 'scanner' && (
@@ -194,6 +194,13 @@ export default function App() {
         )}
 
       </main>
+
+      {/* Mobile Native App Bottom Navigation Bar */}
+      <BottomNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        hasScannedProduct={!!selectedProduct}
+      />
 
       {/* Side by Side Comparison Modal */}
       <ComparisonModal
