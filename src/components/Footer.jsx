@@ -13,7 +13,7 @@ export default function Footer() {
               <Scan className="w-4 h-4 text-white" />
             </div>
             <span className="font-extrabold text-lg text-slate-900 font-['Outfit']">
-              NUTRISCAN <span className="gradient-text">HEALTH</span>
+              NUTRISCAN <span className="gradient-text">AI</span>
             </span>
           </div>
 
@@ -22,7 +22,7 @@ export default function Footer() {
           </p>
 
           <p className="text-[11px] text-slate-500 italic">
-            Disclaimer: NutriScan provides general nutritional analysis based on published regulatory standards (FSSAI/USDA). For specific medical dietary advice, consult a registered dietitian or doctor.
+            Disclaimer: NutriScan AI provides general nutritional analysis based on published regulatory standards (FSSAI/USDA). For specific medical dietary advice, consult a registered dietitian or doctor.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500 font-medium">
-        <p>© 2026 NutriScan Health India. All rights reserved.</p>
+        <p>© 2026 NutriScan AI India. All rights reserved.</p>
         <p className="flex items-center gap-1">
           Made with <Heart className="w-3.5 h-3.5 text-[#FF4B82] fill-[#FF4B82]" /> for a healthier India
         </p>

@@ -38,7 +38,7 @@ export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, com
             </div>
           </div>
           <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 font-['Outfit']">
-            NutriScan <span className="gradient-text">HEALTH</span>
+            NutriScan <span className="gradient-text">AI</span>
           </span>
         </div>
 
