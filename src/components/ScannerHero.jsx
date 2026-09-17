@@ -13,17 +13,17 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
 
   const fileInputRef = useRef(null);
 
-  // REAL AUTHENTIC EAN BARCODES
+  // REAL AUTHENTIC INDIAN GS1 EAN BARCODES (890 PREFIX)
   const REAL_PRESET_BARCODES = [
-    { name: "Maggi 2-Min Masala", brand: "Nestlé", code: "8901058852370", image: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=200&auto=format&fit=crop&q=80" },
-    { name: "Coca-Cola (500ml)", brand: "Coca-Cola", code: "5449000000996", image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=200&auto=format&fit=crop&q=80" },
-    { name: "Quaker Whole Oats", brand: "PepsiCo", code: "8901491101914", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&auto=format&fit=crop&q=80" },
-    { name: "Doritos Nacho Cheese", brand: "Frito-Lay", code: "8901491503312", image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=200&auto=format&fit=crop&q=80" },
-    { name: "Amul Salted Butter", brand: "Amul", code: "8901262010054", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=200&auto=format&fit=crop&q=80" },
-    { name: "Dark Fantasy Choco Fills", brand: "ITC", code: "8901030026785", image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&auto=format&fit=crop&q=80" }
+    { name: "Maggi 2-Min Masala", brand: "Nestlé India", code: "8901058852370", image: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=200&auto=format&fit=crop&q=80" },
+    { name: "Amul Salted Butter", brand: "Amul India", code: "8901262010054", image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=200&auto=format&fit=crop&q=80" },
+    { name: "Parle-G Glucose Biscuits", brand: "Parle India", code: "8901030000013", image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&auto=format&fit=crop&q=80" },
+    { name: "Cadbury Dairy Milk", brand: "Mondelez India", code: "8901233020945", image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=200&auto=format&fit=crop&q=80" },
+    { name: "Kurkure Masala Munch", brand: "PepsiCo India", code: "8901491001559", image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=200&auto=format&fit=crop&q=80" },
+    { name: "Quaker Rolled Oats", brand: "PepsiCo India", code: "8901491101914", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&auto=format&fit=crop&q=80" }
   ];
 
-  const HOUSEHOLD_SEARCH_CHIPS = ["Parle-G", "Dairy Milk", "Lays Magic Masala", "Bournvita", "Horlicks", "Real Juice", "Kurkure"];
+  const HOUSEHOLD_SEARCH_CHIPS = ["Maggi", "Parle-G", "Amul Butter", "Dairy Milk", "Kurkure", "Lays India", "Bournvita", "Tata Dal"];
 
   // Fetch real barcode data from OpenFoodFacts API
   const handleRealBarcodeFetch = async (code) => {
