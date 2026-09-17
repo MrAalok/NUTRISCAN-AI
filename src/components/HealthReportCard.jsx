@@ -132,6 +132,54 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
 
         </div>
 
+        {/* QUICK COMMERCE PRICE COMPARISON & BUY STRIP */}
+        <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-white flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#FF4B82] animate-pulse" />
+              Check Price & Instant Delivery in India:
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
+            <a
+              href={`https://blinkit.com/s/?q=${encodeURIComponent(product.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-1.5 px-3 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1 transition-all"
+            >
+              <span>🟡 Blinkit</span>
+            </a>
+
+            <a
+              href={`https://www.swiggy.com/instamart/search?query=${encodeURIComponent(product.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-1.5 px-3 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-300 text-xs font-bold flex items-center gap-1 transition-all"
+            >
+              <span>🟠 Instamart</span>
+            </a>
+
+            <a
+              href={`https://www.zepto.co.in/search?q=${encodeURIComponent(product.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-1.5 px-3 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-bold flex items-center gap-1 transition-all"
+            >
+              <span>🟣 Zepto</span>
+            </a>
+
+            <a
+              href={`https://www.bigbasket.com/ps/?q=${encodeURIComponent(product.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-1.5 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1 transition-all"
+            >
+              <span>🟢 BigBasket</span>
+            </a>
+          </div>
+        </div>
+
         {/* PROS VS CONS SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
           {/* Pros */}
