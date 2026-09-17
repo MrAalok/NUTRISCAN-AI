@@ -1,5 +1,5 @@
 import React from 'react';
-import { Scan, FileText, HeartPulse, Sparkles, Layers, DollarSign } from 'lucide-react';
+import { Scan, FileText, HeartPulse, Sparkles, Layers } from 'lucide-react';
 
 export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }) {
   const navItems = [
@@ -8,7 +8,6 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
     { id: 'disease', label: 'Disease', icon: HeartPulse },
     { id: 'additives', label: 'Additives', icon: Sparkles },
     { id: 'alternatives', label: 'Swaps', icon: Layers },
-    { id: 'pricing', label: 'Plans', icon: DollarSign },
   ];
 
   return (
@@ -26,7 +25,7 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
         padding: '8px 12px',
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-around',
+        justifyContent: 'space-around',
         boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.7)'
       }}
       className="md:hidden"

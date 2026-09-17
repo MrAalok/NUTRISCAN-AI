@@ -26,7 +26,7 @@ export default function AdditiveDecoder({ product }) {
           Unmasking Hidden Food Chemicals
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 font-light">
-          Food manufacturers use complex E-numbers on labels. NutriScan AI translates them into plain language safety reports.
+          Food manufacturers use complex E-numbers on labels. NutriScan translates them into plain language safety reports.
         </p>
       </div>
 

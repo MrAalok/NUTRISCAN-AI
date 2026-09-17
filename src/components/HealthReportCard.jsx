@@ -12,14 +12,14 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
   const scoreColorClass = isGreen ? 'text-emerald-400' : isYellow ? 'text-amber-400' : 'text-rose-400';
 
   return (
-    <div id="health-report-section" className="scroll-mt-24 max-w-5xl mx-auto px-4 lg:px-8 mb-12">
+    <div id="health-report-section" className="scroll-mt-24 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 mb-12">
       
       {/* Header Banner for Scanned Item */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 overflow-hidden">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <span className="text-[10px] font-bold uppercase tracking-widest text-[#FF4B82] px-2.5 py-0.5 rounded-full bg-[#FF4B82]/10 border border-[#FF4B82]/20">
-              AI Analysis Report Generated
+              Nutritional Report
             </span>
             <span className="text-xs text-slate-400">Barcode: {product.barcode}</span>
           </div>
@@ -44,9 +44,9 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
       </div>
 
       {/* Main Glass Report Container */}
-      <div className="glass-panel p-6 sm:p-8 space-y-6">
+      <div className="glass-panel p-5 sm:p-8 space-y-6">
         
-        {/* TOP SECTION: Traffic Light Score Card & Macro Chips */}
+        {/* TOP SECTION: Score Card & Macro Chips */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
           {/* Left Column: Color Code Score Card */}
@@ -59,7 +59,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
           }`}>
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                NutriScan Traffic Light
+                Health Score Rating
               </span>
               <div className="flex items-center gap-1.5">
                 <span className={`w-3.5 h-3.5 rounded-full ${isRed ? 'bg-rose-500 shadow-lg shadow-rose-500/50' : 'bg-rose-900/40'}`} />
@@ -97,36 +97,36 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
               </span>
             </div>
 
-            {/* Macros Grid (Fixed 2 col mobile -> 3 col tablet -> 6 col desktop) */}
+            {/* Macros Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 my-2">
               <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
                 <p className="text-[10px] text-slate-400 uppercase">Protein</p>
-                <p className="text-xs font-bold text-emerald-400">{product.macros.protein}</p>
+                <p className="text-xs font-bold text-emerald-400">{product.macros?.protein}</p>
               </div>
               <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
                 <p className="text-[10px] text-slate-400 uppercase">Carbs</p>
-                <p className="text-xs font-bold text-sky-400">{product.macros.carbs}</p>
+                <p className="text-xs font-bold text-sky-400">{product.macros?.carbs}</p>
               </div>
               <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
                 <p className="text-[10px] text-slate-400 uppercase">Total Fat</p>
-                <p className="text-xs font-bold text-amber-400">{product.macros.fat}</p>
+                <p className="text-xs font-bold text-amber-400">{product.macros?.fat}</p>
               </div>
               <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
                 <p className="text-[10px] text-slate-400 uppercase">Sat. Fat</p>
-                <p className="text-xs font-bold text-rose-400">{product.macros.saturatedFat}</p>
+                <p className="text-xs font-bold text-rose-400">{product.macros?.saturatedFat}</p>
               </div>
               <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
                 <p className="text-[10px] text-slate-400 uppercase">Sugar</p>
-                <p className="text-xs font-bold text-purple-400">{product.macros.sugar}</p>
+                <p className="text-xs font-bold text-purple-400">{product.macros?.sugar}</p>
               </div>
               <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
                 <p className="text-[10px] text-slate-400 uppercase">Sodium</p>
-                <p className="text-xs font-bold text-rose-300">{product.macros.sodium}</p>
+                <p className="text-xs font-bold text-rose-300">{product.macros?.sodium}</p>
               </div>
             </div>
 
             <p className="text-[11px] text-slate-400 mt-2">
-              💡 <span className="text-slate-300 font-medium">NutriScan AI Warning:</span> High sodium and refined palm oil are primary drivers of lower health scores in processed packaged foods.
+              💡 <span className="text-slate-300 font-medium">Health Insight:</span> High sodium and refined palm oil are primary drivers of lower health scores in processed packaged foods.
             </p>
           </div>
 
@@ -141,7 +141,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
               Nutritional Advantages (Pros)
             </h3>
             <ul className="space-y-2">
-              {product.pros.map((pro, idx) => (
+              {product.pros?.map((pro, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
                   <span className="text-emerald-400 font-bold">•</span>
                   <span>{pro}</span>
@@ -157,7 +157,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
               Nutritional Disadvantages & Risks (Cons)
             </h3>
             <ul className="space-y-2">
-              {product.cons.map((con, idx) => (
+              {product.cons?.map((con, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
                   <span className="text-rose-400 font-bold">•</span>
                   <span>{con}</span>
@@ -182,7 +182,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                 Short-Term Impact (0 - 24 Hours)
               </div>
               <ul className="space-y-2">
-                {product.shortTermEffects.map((effect, idx) => (
+                {product.shortTermEffects?.map((effect, idx) => (
                   <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
                     <span className="text-amber-400 font-bold">⚡</span>
                     <span>{effect}</span>
@@ -198,7 +198,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                 Long-Term Impact (Chronic Consumption)
               </div>
               <ul className="space-y-2">
-                {product.longTermEffects.map((effect, idx) => (
+                {product.longTermEffects?.map((effect, idx) => (
                   <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
                     <span className="text-purple-400 font-bold">⚠️</span>
                     <span>{effect}</span>

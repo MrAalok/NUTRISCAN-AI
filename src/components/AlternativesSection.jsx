@@ -9,13 +9,13 @@ export default function AlternativesSection({ product, onSelectProduct }) {
       <div className="text-center max-w-2xl mx-auto mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-2 border border-emerald-500/20">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>AI Healthier Alternatives Recommender</span>
+          <span>Healthier Food Alternatives</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-['Outfit']">
           Upgrade Your Plate: Swap for Better Health
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 font-light">
-          Instead of <span className="text-rose-400 font-semibold">{product.name}</span>, NutriScan AI recommends these clean, high-nutrition substitutes:
+          Instead of <span className="text-rose-400 font-semibold">{product.name}</span>, NutriScan recommends these clean, high-nutrition substitutes:
         </p>
       </div>
 

@@ -32,7 +32,7 @@ export default function DiseaseMatrix({ product }) {
           Is This Food Safe For Your Health Condition?
         </h2>
         <p className="text-xs sm:text-sm text-slate-400 font-light">
-          Select your health profile or medical condition to view AI personalized risk alerts
+          Select your health profile or medical condition to view personalized health risk warnings
         </p>
       </div>
 

@@ -10,9 +10,6 @@ import DiseaseMatrix from './components/DiseaseMatrix';
 import AdditiveDecoder from './components/AdditiveDecoder';
 import AlternativesSection from './components/AlternativesSection';
 import ComparisonModal from './components/ComparisonModal';
-import DataSources from './components/DataSources';
-import AboutFounder from './components/AboutFounder';
-import PricingSection from './components/PricingSection';
 import Footer from './components/Footer';
 
 import { INITIAL_FOOD_DATABASE } from './data/foodDatabase';
@@ -20,13 +17,13 @@ import { INITIAL_FOOD_DATABASE } from './data/foodDatabase';
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(INITIAL_FOOD_DATABASE[0]);
   const [isScanning, setIsScanning] = useState(false);
-  const [activeTab, setActiveTab] = useState('scanner'); // 'scanner' | 'report' | 'disease' | 'additives' | 'alternatives' | 'sources' | 'founder' | 'pricing'
+  const [activeTab, setActiveTab] = useState('scanner'); // 'scanner' | 'report' | 'disease' | 'additives' | 'alternatives'
   
   // Comparison modal state
   const [compareList, setCompareList] = useState([]);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
 
-  // Handle product selection & switch to dedicated Report tab!
+  // Handle product selection & switch to dedicated Report tab
   const handleSelectProduct = (product) => {
     setSelectedProduct(product);
 
@@ -61,7 +58,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#090D16] text-white selection:bg-[#FF4B82] selection:text-white pb-16 md:pb-0">
       
-      {/* Top Glass Navigation Header */}
+      {/* Top Navigation Header */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -71,7 +68,7 @@ export default function App() {
       />
 
       {/* Sub Header Product Context Strip */}
-      {selectedProduct && activeTab !== 'scanner' && activeTab !== 'sources' && activeTab !== 'founder' && activeTab !== 'pricing' && (
+      {selectedProduct && activeTab !== 'scanner' && (
         <div className="bg-[#121826]/95 border-b border-white/10 py-2.5 px-3 sticky top-[52px] sm:top-[60px] z-40 backdrop-blur-md">
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2 min-w-0">
@@ -123,10 +120,10 @@ export default function App() {
         </div>
       )}
 
-      {/* Main Container - DEDICATED SINGLE-PURPOSE SCREENS */}
+      {/* Main Container */}
       <main className="flex-1 py-4 sm:py-8">
         
-        {/* PAGE 1: AI Scanner Studio Only (Zero clutter) */}
+        {/* Scanner Screen */}
         {activeTab === 'scanner' && (
           <div className="animate-fadeIn">
             <ScannerHero
@@ -137,7 +134,7 @@ export default function App() {
           </div>
         )}
 
-        {/* PAGE 2: Dedicated AI Health Report Card Only */}
+        {/* Health Report Screen */}
         {activeTab === 'report' && selectedProduct && (
           <div className="animate-fadeIn">
             <HealthReportCard
@@ -148,48 +145,27 @@ export default function App() {
           </div>
         )}
 
-        {/* PAGE 3: Dedicated Disease Risk Checker Only */}
+        {/* Disease Risk Checker Screen */}
         {activeTab === 'disease' && selectedProduct && (
           <div className="animate-fadeIn">
             <DiseaseMatrix product={selectedProduct} />
           </div>
         )}
 
-        {/* PAGE 4: Dedicated E-Number Additive Decoder Only */}
+        {/* Additive Decoder Screen */}
         {activeTab === 'additives' && selectedProduct && (
           <div className="animate-fadeIn">
             <AdditiveDecoder product={selectedProduct} />
           </div>
         )}
 
-        {/* PAGE 5: Dedicated Healthier Alternatives Recommender Only */}
+        {/* Healthier Alternatives Screen */}
         {activeTab === 'alternatives' && selectedProduct && (
           <div className="animate-fadeIn">
             <AlternativesSection
               product={selectedProduct}
               onSelectProduct={handleSelectProduct}
             />
-          </div>
-        )}
-
-        {/* PAGE 6: Dedicated Data Sources & Verification Only */}
-        {activeTab === 'sources' && (
-          <div className="animate-fadeIn">
-            <DataSources />
-          </div>
-        )}
-
-        {/* PAGE 7: Dedicated Founder Spotlight & Pitch Presentation Only */}
-        {activeTab === 'founder' && (
-          <div className="animate-fadeIn">
-            <AboutFounder />
-          </div>
-        )}
-
-        {/* PAGE 8: Dedicated Business Plans & Monetization Only */}
-        {activeTab === 'pricing' && (
-          <div className="animate-fadeIn">
-            <PricingSection />
           </div>
         )}
 
