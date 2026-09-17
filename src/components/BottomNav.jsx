@@ -18,15 +18,15 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
         left: 0,
         right: 0,
         zIndex: 9999,
-        backgroundColor: '#060911',
-        borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+        backgroundColor: 'rgba(255, 255, 255, 0.96)',
+        borderTop: '1px solid #E2E8F0',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         padding: '8px 12px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
-        boxShadow: '0 -10px 25px rgba(0, 0, 0, 0.7)'
+        boxShadow: '0 -10px 25px rgba(15, 23, 42, 0.08)'
       }}
       className="md:hidden"
     >
@@ -42,12 +42,12 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '6px 10px',
+              padding: '6px 12px',
               borderRadius: '12px',
               border: 'none',
-              background: isActive ? 'linear-gradient(135deg, #FF4B82 0%, #8B5CF6 100%)' : 'transparent',
-              color: isActive ? '#FFFFFF' : '#94A3B8',
-              boxShadow: isActive ? '0 4px 15px rgba(255, 75, 130, 0.4)' : 'none',
+              background: isActive ? 'linear-gradient(135deg, #FF4B82 0%, #6366F1 100%)' : 'transparent',
+              color: isActive ? '#FFFFFF' : '#64748B',
+              boxShadow: isActive ? '0 4px 15px rgba(255, 75, 130, 0.35)' : 'none',
               transition: 'all 0.2s ease'
             }}
           >

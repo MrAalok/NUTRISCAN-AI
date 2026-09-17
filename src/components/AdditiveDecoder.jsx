@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Sparkles, AlertTriangle, ShieldCheck, Info, HelpCircle } from 'lucide-react';
+import React from 'react';
+import { Sparkles, AlertTriangle, ShieldCheck, Info } from 'lucide-react';
 
 export default function AdditiveDecoder({ product }) {
-  const [searchTerm, setSearchTerm] = useState('');
 
   const commonENumbers = [
     { code: "E621", name: "Monosodium Glutamate (MSG)", risk: "Moderate", category: "Flavor Enhancer", note: "Excites taste receptors. May trigger migraines in sensitive individuals." },
@@ -18,39 +17,39 @@ export default function AdditiveDecoder({ product }) {
   return (
     <section id="additives-section" className="scroll-mt-24 max-w-5xl mx-auto px-4 lg:px-8 mb-16">
       <div className="text-center max-w-2xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold mb-2 border border-purple-500/20">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-bold mb-2 border border-purple-200">
+          <Sparkles className="w-3.5 h-3.5 text-purple-600" />
           <span>E-Number & Additive Decoder</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-['Outfit']">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-['Outfit']">
           Unmasking Hidden Food Chemicals
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 font-light">
+        <p className="text-xs sm:text-sm text-slate-600 font-normal">
           Food manufacturers use complex E-numbers on labels. NutriScan translates them into plain language safety reports.
         </p>
       </div>
 
-      <div className="glass-panel p-6 sm:p-8 space-y-6">
+      <div className="glass-panel p-6 sm:p-8 space-y-6 bg-white border border-slate-200 shadow-xl">
         
         {/* Scanned Product Additives */}
         {productAdditives.length > 0 ? (
           <div>
-            <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2 font-['Outfit']">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2 font-['Outfit']">
+              <AlertTriangle className="w-4 h-4 text-amber-600" />
               Additives Detected in "{product.name}" ({productAdditives.length})
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {productAdditives.map((add, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-start justify-between gap-3">
+                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 shadow-sm">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-bold text-[#FF4B82] font-mono bg-[#FF4B82]/10 px-2 py-0.5 rounded border border-[#FF4B82]/20">
+                      <span className="text-xs font-bold text-[#FF4B82] font-mono bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
                         {add.code}
                       </span>
-                      <span className="text-xs font-bold text-white">{add.name}</span>
+                      <span className="text-xs font-extrabold text-slate-900">{add.name}</span>
                     </div>
-                    <p className="text-xs text-slate-300 font-light leading-relaxed">
+                    <p className="text-xs text-slate-600 font-medium leading-relaxed">
                       {add.description}
                     </p>
                   </div>
@@ -69,34 +68,34 @@ export default function AdditiveDecoder({ product }) {
             </div>
           </div>
         ) : (
-          <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 shrink-0" />
+          <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 shrink-0 text-emerald-600" />
             <span>Clean Packet! Zero harmful E-number synthetic additives detected in this food product.</span>
           </div>
         )}
 
         {/* Global E-Number Reference Table */}
-        <div className="pt-6 border-t border-white/10">
+        <div className="pt-6 border-t border-slate-200">
           <div className="flex items-center justify-between mb-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Info className="w-4 h-4 text-purple-400" />
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+              <Info className="w-4 h-4 text-purple-600" />
               Common E-Numbers Reference Database
             </h4>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {commonENumbers.map((item, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+              <div key={idx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-mono font-bold text-purple-400">{item.code}</span>
+                  <span className="text-xs font-mono font-bold text-purple-700">{item.code}</span>
                   <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded uppercase ${
-                    item.risk === 'High' ? 'text-rose-400 bg-rose-500/10' : 'text-amber-400 bg-amber-500/10'
+                    item.risk === 'High' ? 'text-rose-700 bg-rose-100' : 'text-amber-700 bg-amber-100'
                   }`}>
                     {item.risk} Risk
                   </span>
                 </div>
-                <p className="text-xs font-semibold text-white truncate">{item.name}</p>
-                <p className="text-[10px] text-slate-400 mt-1 line-clamp-2">{item.note}</p>
+                <p className="text-xs font-bold text-slate-900 truncate">{item.name}</p>
+                <p className="text-[10px] text-slate-600 mt-1 line-clamp-2 font-medium">{item.note}</p>
               </div>
             ))}
           </div>

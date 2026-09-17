@@ -56,7 +56,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090D16] text-white selection:bg-[#FF4B82] selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-900 selection:bg-[#FF4B82] selection:text-white pb-16 md:pb-0">
       
       {/* Top Navigation Header */}
       <Navbar
@@ -69,7 +69,7 @@ export default function App() {
 
       {/* Sub Header Product Context Strip */}
       {selectedProduct && activeTab !== 'scanner' && (
-        <div className="bg-[#121826]/95 border-b border-white/10 py-2.5 px-3 sticky top-[52px] sm:top-[60px] z-40 backdrop-blur-md">
+        <div className="bg-white/95 border-b border-slate-200 py-2.5 px-3 sticky top-[52px] sm:top-[60px] z-40 backdrop-blur-md shadow-sm">
           <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2 min-w-0">
               <button
@@ -81,7 +81,7 @@ export default function App() {
               </button>
               
               <div className="flex items-center gap-1.5 truncate">
-                <span className="font-bold text-white font-['Outfit'] truncate">{selectedProduct.name}</span>
+                <span className="font-bold text-slate-900 font-['Outfit'] truncate">{selectedProduct.name}</span>
                 <span className={`text-[9px] font-bold px-2 py-0.2 rounded-full shrink-0 ${
                   selectedProduct.rating === 'Green' ? 'badge-green' : selectedProduct.rating === 'Yellow' ? 'badge-yellow' : 'badge-red'
                 }`}>
@@ -93,25 +93,25 @@ export default function App() {
             <div className="hidden sm:flex items-center gap-1.5">
               <button
                 onClick={() => setActiveTab('report')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'report' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${activeTab === 'report' ? 'bg-[#FF4B82] text-white' : 'text-slate-600 hover:text-slate-900'}`}
               >
                 Report
               </button>
               <button
                 onClick={() => setActiveTab('disease')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'disease' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${activeTab === 'disease' ? 'bg-[#FF4B82] text-white' : 'text-slate-600 hover:text-slate-900'}`}
               >
                 Disease
               </button>
               <button
                 onClick={() => setActiveTab('additives')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'additives' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${activeTab === 'additives' ? 'bg-[#FF4B82] text-white' : 'text-slate-600 hover:text-slate-900'}`}
               >
                 Additives
               </button>
               <button
                 onClick={() => setActiveTab('alternatives')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${activeTab === 'alternatives' ? 'bg-[#FF4B82] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${activeTab === 'alternatives' ? 'bg-[#FF4B82] text-white' : 'text-slate-600 hover:text-slate-900'}`}
               >
                 Swaps
               </button>

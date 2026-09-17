@@ -9,8 +9,8 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
   const isYellow = product.rating === 'Yellow';
   const isRed = product.rating === 'Red';
 
-  const badgeStyle = isGreen ? 'badge-green glow-green' : isYellow ? 'badge-yellow' : 'badge-red glow-red';
-  const scoreColorClass = isGreen ? 'text-emerald-400' : isYellow ? 'text-amber-400' : 'text-rose-400';
+  const badgeStyle = isGreen ? 'badge-green' : isYellow ? 'badge-yellow' : 'badge-red';
+  const scoreColorClass = isGreen ? 'text-emerald-600' : isYellow ? 'text-amber-600' : 'text-rose-600';
 
   return (
     <div id="health-report-section" className="scroll-mt-24 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 mb-12">
@@ -19,16 +19,16 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 overflow-hidden">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#FF4B82] px-2.5 py-0.5 rounded-full bg-[#FF4B82]/10 border border-[#FF4B82]/20">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#FF4B82] px-2.5 py-0.5 rounded-full bg-rose-50 border border-rose-200">
               Nutritional Report
             </span>
-            <span className="text-xs text-slate-400">Barcode: {product.barcode}</span>
+            <span className="text-xs text-slate-500 font-mono">Barcode: {product.barcode}</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-['Outfit'] truncate">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-['Outfit'] truncate">
             {product.name}
           </h2>
-          <p className="text-xs text-slate-400 truncate">
-            Brand: <span className="text-slate-200 font-medium">{product.brand}</span> • Category: <span className="text-slate-200 font-medium">{product.category}</span>
+          <p className="text-xs text-slate-500 truncate">
+            Brand: <span className="text-slate-900 font-semibold">{product.brand}</span> • Category: <span className="text-slate-900 font-semibold">{product.category}</span>
           </p>
         </div>
 
@@ -45,7 +45,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
       </div>
 
       {/* Main Glass Report Container */}
-      <div className="glass-panel p-5 sm:p-8 space-y-6">
+      <div className="glass-panel p-5 sm:p-8 space-y-6 bg-white border border-slate-200 shadow-xl">
         
         {/* TOP SECTION: Score Card & Macro Chips */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -53,19 +53,19 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
           {/* Left Column: Color Code Score Card */}
           <div className={`lg:col-span-5 p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden border ${
             isGreen 
-              ? 'bg-emerald-950/20 border-emerald-500/30' 
+              ? 'bg-emerald-50 border-emerald-200' 
               : isYellow 
-              ? 'bg-amber-950/20 border-amber-500/30' 
-              : 'bg-rose-950/20 border-rose-500/30'
+              ? 'bg-amber-50 border-amber-200' 
+              : 'bg-rose-50 border-rose-200'
           }`}>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
                 Health Score Rating
               </span>
               <div className="flex items-center gap-1.5">
-                <span className={`w-3.5 h-3.5 rounded-full ${isRed ? 'bg-rose-500 shadow-lg shadow-rose-500/50' : 'bg-rose-900/40'}`} />
-                <span className={`w-3.5 h-3.5 rounded-full ${isYellow ? 'bg-amber-500 shadow-lg shadow-amber-500/50' : 'bg-amber-900/40'}`} />
-                <span className={`w-3.5 h-3.5 rounded-full ${isGreen ? 'bg-emerald-500 shadow-lg shadow-emerald-500/50' : 'bg-emerald-900/40'}`} />
+                <span className={`w-3.5 h-3.5 rounded-full ${isRed ? 'bg-rose-500 shadow-md shadow-rose-500/50' : 'bg-rose-200'}`} />
+                <span className={`w-3.5 h-3.5 rounded-full ${isYellow ? 'bg-amber-500 shadow-md shadow-amber-500/50' : 'bg-amber-200'}`} />
+                <span className={`w-3.5 h-3.5 rounded-full ${isGreen ? 'bg-emerald-500 shadow-md shadow-emerald-500/50' : 'bg-emerald-200'}`} />
               </div>
             </div>
 
@@ -73,61 +73,61 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
               <span className={`text-5xl sm:text-7xl font-black font-['Outfit'] ${scoreColorClass}`}>
                 {product.score}
               </span>
-              <span className="text-slate-400 font-bold text-base sm:text-lg">/ 100</span>
+              <span className="text-slate-500 font-bold text-base sm:text-lg">/ 100</span>
             </div>
 
             <div>
               <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-2 ${badgeStyle}`}>
                 {product.rating} Tag • {product.rating === 'Green' ? 'Safe & Healthy' : product.rating === 'Yellow' ? 'Moderate Caution' : 'Avoid / Unhealthy'}
               </div>
-              <p className="text-xs font-medium text-slate-200 leading-relaxed">
+              <p className="text-xs font-semibold text-slate-800 leading-relaxed">
                 {product.verdict}
               </p>
             </div>
           </div>
 
           {/* Right Column: Nutrition Macros & Calories */}
-          <div className="lg:col-span-7 bg-white/[0.02] p-5 sm:p-6 rounded-2xl border border-white/5 flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                 <Flame className="w-4 h-4 text-[#FF4B82]" />
                 Nutritional Profile (Per {product.servingSize})
               </span>
-              <span className="text-xs font-bold text-white bg-white/10 px-2.5 py-1 rounded-lg">
+              <span className="text-xs font-bold text-slate-900 bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">
                 {product.caloriesPerServing} kcal
               </span>
             </div>
 
             {/* Macros Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 my-2">
-              <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
-                <p className="text-[10px] text-slate-400 uppercase">Protein</p>
-                <p className="text-xs font-bold text-emerald-400">{product.macros?.protein}</p>
+              <div className="p-2 rounded-xl bg-white text-center border border-slate-200 shadow-sm">
+                <p className="text-[10px] text-slate-500 font-bold uppercase">Protein</p>
+                <p className="text-xs font-black text-emerald-600">{product.macros?.protein}</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
-                <p className="text-[10px] text-slate-400 uppercase">Carbs</p>
-                <p className="text-xs font-bold text-sky-400">{product.macros?.carbs}</p>
+              <div className="p-2 rounded-xl bg-white text-center border border-slate-200 shadow-sm">
+                <p className="text-[10px] text-slate-500 font-bold uppercase">Carbs</p>
+                <p className="text-xs font-black text-sky-600">{product.macros?.carbs}</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
-                <p className="text-[10px] text-slate-400 uppercase">Total Fat</p>
-                <p className="text-xs font-bold text-amber-400">{product.macros?.fat}</p>
+              <div className="p-2 rounded-xl bg-white text-center border border-slate-200 shadow-sm">
+                <p className="text-[10px] text-slate-500 font-bold uppercase">Total Fat</p>
+                <p className="text-xs font-black text-amber-600">{product.macros?.fat}</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
-                <p className="text-[10px] text-slate-400 uppercase">Sat. Fat</p>
-                <p className="text-xs font-bold text-rose-400">{product.macros?.saturatedFat}</p>
+              <div className="p-2 rounded-xl bg-white text-center border border-slate-200 shadow-sm">
+                <p className="text-[10px] text-slate-500 font-bold uppercase">Sat. Fat</p>
+                <p className="text-xs font-black text-rose-600">{product.macros?.saturatedFat}</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
-                <p className="text-[10px] text-slate-400 uppercase">Sugar</p>
-                <p className="text-xs font-bold text-purple-400">{product.macros?.sugar}</p>
+              <div className="p-2 rounded-xl bg-white text-center border border-slate-200 shadow-sm">
+                <p className="text-[10px] text-slate-500 font-bold uppercase">Sugar</p>
+                <p className="text-xs font-black text-purple-600">{product.macros?.sugar}</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.04] text-center border border-white/5">
-                <p className="text-[10px] text-slate-400 uppercase">Sodium</p>
-                <p className="text-xs font-bold text-rose-300">{product.macros?.sodium}</p>
+              <div className="p-2 rounded-xl bg-white text-center border border-slate-200 shadow-sm">
+                <p className="text-[10px] text-slate-500 font-bold uppercase">Sodium</p>
+                <p className="text-xs font-black text-rose-600">{product.macros?.sodium}</p>
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-400 mt-2">
-              💡 <span className="text-slate-300 font-medium">Health Insight:</span> High sodium and refined palm oil are primary drivers of lower health scores in processed packaged foods.
+            <p className="text-[11px] text-slate-600 mt-2">
+              💡 <span className="text-slate-900 font-semibold">Health Insight:</span> High sodium and refined palm oil are primary drivers of lower health scores in processed packaged foods.
             </p>
           </div>
 
@@ -137,15 +137,15 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
         {(() => {
           const priceMatrix = getQuickCommercePriceMatrix(product.name);
           return (
-            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FF4B82] animate-pulse" />
-                  <h3 className="text-xs font-bold text-white uppercase tracking-wider font-['Outfit']">
+                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-['Outfit']">
                     Live Quick-Commerce Price Comparison (MRP: {priceMatrix.baseMrp})
                   </h3>
                 </div>
-                <span className="text-[11px] text-slate-400 font-light">
+                <span className="text-[11px] text-slate-500 font-medium">
                   Compare prices across 10-min delivery apps in India & order best deal
                 </span>
               </div>
@@ -158,28 +158,28 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 rounded-xl border flex flex-col justify-between transition-all group relative ${p.bgClass} hover:scale-[1.03]`}
+                    className={`p-3 rounded-xl border flex flex-col justify-between transition-all group relative ${p.bgClass} hover:scale-[1.03] shadow-sm`}
                   >
                     {p.isLowest && (
-                      <span className="absolute -top-2 -right-1 text-[9px] font-black uppercase tracking-wider bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-full shadow-md">
+                      <span className="absolute -top-2 -right-1 text-[9px] font-black uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded-full shadow-md">
                         🔥 BEST DEAL
                       </span>
                     )}
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-bold text-white flex items-center gap-1">
+                        <span className="text-xs font-bold text-slate-900 flex items-center gap-1">
                           <span>{p.logo}</span> {p.name}
                         </span>
                       </div>
-                      <p className="text-[10px] text-slate-400 font-medium">{p.delivery}</p>
+                      <p className="text-[10px] text-slate-500 font-semibold">{p.delivery}</p>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-between pt-2 border-t border-white/10">
-                      <span className="text-lg font-black text-white font-['Outfit'] group-hover:text-emerald-400 transition-colors">
+                    <div className="mt-3 flex items-center justify-between pt-2 border-t border-slate-200">
+                      <span className="text-lg font-black text-slate-900 font-['Outfit'] group-hover:text-emerald-600 transition-colors">
                         {p.price}
                       </span>
-                      <span className="text-[10px] font-bold underline flex items-center gap-0.5 text-slate-300">
+                      <span className="text-[10px] font-bold underline flex items-center gap-0.5 text-slate-600">
                         Order <ExternalLink className="w-2.5 h-2.5" />
                       </span>
                     </div>
@@ -191,17 +191,17 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
         })()}
 
         {/* PROS VS CONS SECTION */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-200">
           {/* Pros */}
-          <div className="p-5 rounded-2xl bg-emerald-500/[0.03] border border-emerald-500/20">
-            <h3 className="text-sm font-bold text-emerald-400 flex items-center gap-2 mb-3 font-['Outfit']">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200">
+            <h3 className="text-sm font-bold text-emerald-700 flex items-center gap-2 mb-3 font-['Outfit']">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               Nutritional Advantages (Pros)
             </h3>
             <ul className="space-y-2">
               {product.pros?.map((pro, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
-                  <span className="text-emerald-400 font-bold">•</span>
+                <li key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
+                  <span className="text-emerald-600 font-bold">•</span>
                   <span>{pro}</span>
                 </li>
               ))}
@@ -209,15 +209,15 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
           </div>
 
           {/* Cons */}
-          <div className="p-5 rounded-2xl bg-rose-500/[0.03] border border-rose-500/20">
-            <h3 className="text-sm font-bold text-rose-400 flex items-center gap-2 mb-3 font-['Outfit']">
-              <ShieldAlert className="w-4 h-4 text-rose-400" />
+          <div className="p-5 rounded-2xl bg-rose-50 border border-rose-200">
+            <h3 className="text-sm font-bold text-rose-700 flex items-center gap-2 mb-3 font-['Outfit']">
+              <ShieldAlert className="w-4 h-4 text-rose-600" />
               Nutritional Disadvantages & Risks (Cons)
             </h3>
             <ul className="space-y-2">
               {product.cons?.map((con, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
-                  <span className="text-rose-400 font-bold">•</span>
+                <li key={idx} className="flex items-start gap-2 text-xs text-slate-700 font-medium">
+                  <span className="text-rose-600 font-bold">•</span>
                   <span>{con}</span>
                 </li>
               ))}
@@ -226,23 +226,23 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
         </div>
 
         {/* SHORT-TERM VS LONG-TERM BODY IMPACT */}
-        <div className="pt-4 border-t border-white/10">
-          <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2 font-['Outfit']">
+        <div className="pt-4 border-t border-slate-200">
+          <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2 font-['Outfit']">
             <Activity className="w-5 h-5 text-[#FF4B82]" />
             Body Effect Matrix (Short-Term vs. Long-Term)
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Short Term */}
-            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
-              <div className="flex items-center gap-2 text-xs font-semibold text-amber-400 mb-2">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="flex items-center gap-2 text-xs font-bold text-amber-700 mb-2">
                 <Clock className="w-4 h-4" />
                 Short-Term Impact (0 - 24 Hours)
               </div>
               <ul className="space-y-2">
                 {product.shortTermEffects?.map((effect, idx) => (
-                  <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
-                    <span className="text-amber-400 font-bold">⚡</span>
+                  <li key={idx} className="text-xs text-slate-700 font-medium flex items-start gap-2">
+                    <span className="text-amber-600 font-bold">⚡</span>
                     <span>{effect}</span>
                   </li>
                 ))}
@@ -250,15 +250,15 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
             </div>
 
             {/* Long Term */}
-            <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/5">
-              <div className="flex items-center gap-2 text-xs font-semibold text-purple-400 mb-2">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="flex items-center gap-2 text-xs font-bold text-purple-700 mb-2">
                 <Heart className="w-4 h-4" />
                 Long-Term Impact (Chronic Consumption)
               </div>
               <ul className="space-y-2">
                 {product.longTermEffects?.map((effect, idx) => (
-                  <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
-                    <span className="text-purple-400 font-bold">⚠️</span>
+                  <li key={idx} className="text-xs text-slate-700 font-medium flex items-start gap-2">
+                    <span className="text-purple-600 font-bold">⚠️</span>
                     <span>{effect}</span>
                   </li>
                 ))}

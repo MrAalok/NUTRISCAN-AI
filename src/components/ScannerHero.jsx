@@ -93,27 +93,27 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
 
       {/* Hero Header Text */}
       <div className="text-center max-w-3xl mx-auto mb-6">
-        <h1 className="text-2xl sm:text-4xl lg:text-6xl font-extrabold text-white tracking-tight leading-snug mb-2 font-['Outfit']">
+        <h1 className="text-2xl sm:text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-snug mb-2 font-['Outfit']">
           Scan Any Food. <br />
           <span className="gradient-text">Know What's Inside.</span>
         </h1>
 
-        <p className="text-slate-300 text-xs sm:text-base leading-relaxed font-light px-2">
-          Instant nutritional analysis, chemical additive safety breakdown, and personalized health scores.
+        <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-normal px-2">
+          Instant nutritional analysis, chemical additive safety breakdown, and Indian health ratings.
         </p>
       </div>
 
       {/* Scanner Control Studio Card */}
-      <div className="max-w-4xl mx-auto glass-panel p-4 sm:p-8 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto glass-panel p-4 sm:p-8 relative overflow-hidden bg-white border border-slate-200 shadow-xl">
         
         {/* Input Mode Selector Tabs */}
-        <div className="grid grid-cols-3 gap-1.5 p-1 bg-white/[0.04] rounded-xl border border-white/5 mb-5 text-center">
+        <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 mb-5 text-center">
           <button
             onClick={() => setActiveTab('camera')}
             className={`py-2 px-2 rounded-lg text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 transition-all ${
               activeTab === 'camera'
-                ? 'bg-gradient-to-r from-[#FF4B82] to-[#8B5CF6] text-white shadow-lg'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#FF4B82] to-[#6366F1] text-white shadow-md'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Camera className="w-3.5 h-3.5 shrink-0" />
@@ -124,8 +124,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
             onClick={() => setActiveTab('barcodeInput')}
             className={`py-2 px-2 rounded-lg text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 transition-all ${
               activeTab === 'barcodeInput'
-                ? 'bg-gradient-to-r from-[#FF4B82] to-[#8B5CF6] text-white shadow-lg'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#FF4B82] to-[#6366F1] text-white shadow-md'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Barcode className="w-3.5 h-3.5 shrink-0" />
@@ -136,8 +136,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
             onClick={() => setActiveTab('search')}
             className={`py-2 px-2 rounded-lg text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 transition-all ${
               activeTab === 'search'
-                ? 'bg-gradient-to-r from-[#FF4B82] to-[#8B5CF6] text-white shadow-lg'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#FF4B82] to-[#6366F1] text-white shadow-md'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Search className="w-3.5 h-3.5 shrink-0" />
@@ -147,8 +147,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
 
         {/* Error Alert Banner */}
         {scanError && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
             <span>{scanError}</span>
           </div>
         )}
@@ -165,17 +165,17 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
               className="hidden"
             />
 
-            <div className="relative w-full h-48 sm:h-56 rounded-2xl border-2 border-dashed border-[#FF4B82]/40 bg-[#090D16]/90 flex flex-col items-center justify-center p-3">
+            <div className="relative w-full h-48 sm:h-56 rounded-2xl border-2 border-dashed border-[#FF4B82]/40 bg-slate-50 flex flex-col items-center justify-center p-3">
               {isScanning && <div className="laser-line" />}
               
-              <div className="w-12 h-12 rounded-full bg-[#FF4B82]/10 border border-[#FF4B82]/30 flex items-center justify-center mb-2">
+              <div className="w-12 h-12 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mb-2">
                 <Camera className={`w-6 h-6 text-[#FF4B82] ${isScanning ? 'animate-pulse' : ''}`} />
               </div>
 
-              <p className="text-xs sm:text-sm font-semibold text-white mb-1">
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
                 {isScanning ? 'Analyzing Nutrition Data...' : 'Scan Food Barcode'}
               </p>
-              <p className="text-[11px] text-slate-400 max-w-xs mb-3">
+              <p className="text-[11px] text-slate-500 max-w-xs mb-3">
                 Tap button to snap photo of barcode or wrapper
               </p>
 
@@ -210,7 +210,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                     transform: 'translateY(-50%)',
                     width: '16px',
                     height: '16px',
-                    color: '#94A3B8',
+                    color: '#64748B',
                     pointerEvents: 'none'
                   }} 
                 />
@@ -226,9 +226,9 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                     paddingTop: '10px',
                     paddingBottom: '10px',
                     borderRadius: '12px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#FFFFFF',
+                    backgroundColor: '#F8FAFC',
+                    border: '1px solid #CBD5E1',
+                    color: '#0F172A',
                     fontSize: '12px',
                     outline: 'none'
                   }}
@@ -254,7 +254,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                     transform: 'translateY(-50%)',
                     width: '16px',
                     height: '16px',
-                    color: '#94A3B8',
+                    color: '#64748B',
                     pointerEvents: 'none'
                   }} 
                 />
@@ -270,9 +270,9 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                     paddingTop: '10px',
                     paddingBottom: '10px',
                     borderRadius: '12px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: '#FFFFFF',
+                    backgroundColor: '#F8FAFC',
+                    border: '1px solid #CBD5E1',
+                    color: '#0F172A',
                     fontSize: '12px',
                     outline: 'none'
                   }}
@@ -284,12 +284,12 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
             </form>
 
             <div className="flex flex-wrap items-center gap-1 mb-3">
-              <span className="text-[10px] text-slate-400 font-semibold">Quick Search:</span>
+              <span className="text-[10px] text-slate-500 font-bold">Quick Search:</span>
               {HOUSEHOLD_SEARCH_CHIPS.map((chip, idx) => (
                 <button
                   key={idx}
                   onClick={() => { setSearchQuery(chip); handleSearchSubmit(chip); }}
-                  className="text-[9px] sm:text-[10px] font-medium bg-white/[0.04] hover:bg-white/[0.1] px-2 py-0.5 rounded-full border border-white/10 text-slate-300 transition-all"
+                  className="text-[9px] sm:text-[10px] font-semibold bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-full border border-slate-200 text-slate-700 transition-all"
                 >
                   {chip}
                 </button>
@@ -302,13 +302,13 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                   <div
                     key={prod.id}
                     onClick={() => onSelectProduct(prod)}
-                    className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 cursor-pointer transition-all gap-2"
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 cursor-pointer transition-all gap-2"
                   >
                     <div className="flex items-center gap-2.5 min-w-0 flex-1">
                       <img src={prod.image} alt={prod.name} style={{ width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} />
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-white truncate">{prod.name}</p>
-                        <p className="text-[10px] text-slate-400 truncate">{prod.brand}</p>
+                        <p className="text-xs font-bold text-slate-900 truncate">{prod.name}</p>
+                        <p className="text-[10px] text-slate-500 truncate">{prod.brand}</p>
                       </div>
                     </div>
                     <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
@@ -324,8 +324,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
         )}
 
         {/* Popular Food Products Presets */}
-        <div className="mt-5 pt-4 border-t border-white/10">
-          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">
+        <div className="mt-5 pt-4 border-t border-slate-200">
+          <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2.5">
             Popular Packaged Foods:
           </p>
 
@@ -340,13 +340,13 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                   gap: '12px',
                   padding: '10px 12px',
                   borderRadius: '14px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  backgroundColor: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
                   textAlign: 'left',
                   width: '100%',
                   overflow: 'hidden'
                 }}
-                className="hover:bg-white/[0.08] transition-all group"
+                className="hover:bg-slate-100 transition-all group"
               >
                 <img 
                   src={item.image} 
@@ -360,8 +360,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                   }}
                 />
                 <div style={{ minWidth: 0, flex: 1, overflow: 'hidden' }}>
-                  <p className="text-xs font-bold text-white truncate leading-tight mb-1">{item.name}</p>
-                  <p className="text-[10px] text-slate-400 font-mono truncate">{item.brand}</p>
+                  <p className="text-xs font-bold text-slate-900 truncate leading-tight mb-1">{item.name}</p>
+                  <p className="text-[10px] text-slate-500 font-mono truncate">{item.brand}</p>
                 </div>
               </button>
             ))}

@@ -16,11 +16,12 @@ export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, com
         position: 'sticky',
         top: 0,
         zIndex: 5000,
-        backgroundColor: '#090D16',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        borderBottom: '1px solid #E2E8F0',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        padding: '12px 16px'
+        padding: '12px 16px',
+        boxShadow: '0 4px 20px rgba(15, 23, 42, 0.05)'
       }}
       className="w-full"
     >
@@ -31,18 +32,18 @@ export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, com
           onClick={() => setActiveTab('scanner')}
           className="flex items-center gap-2.5 cursor-pointer group shrink-0"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FF4B82] via-[#8B5CF6] to-[#3B82F6] p-0.5 shadow-lg shadow-[#FF4B82]/20 group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-[#090D16] rounded-[10px] flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FF4B82] via-[#8B5CF6] to-[#3B82F6] p-0.5 shadow-md shadow-[#FF4B82]/20 group-hover:scale-105 transition-transform">
+            <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
               <Scan className="w-4 h-4 text-[#FF4B82]" />
             </div>
           </div>
-          <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white font-['Outfit']">
+          <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 font-['Outfit']">
             NutriScan <span className="gradient-text">HEALTH</span>
           </span>
         </div>
 
         {/* Desktop Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1.5 max-w-full p-1 bg-white/[0.04] rounded-xl border border-white/10">
+        <nav className="hidden md:flex items-center gap-1.5 max-w-full p-1 bg-slate-100 rounded-xl border border-slate-200">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -52,8 +53,8 @@ export default function Navbar({ activeTab, setActiveTab, hasScannedProduct, com
                 onClick={() => setActiveTab(item.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#FF4B82] to-[#8B5CF6] text-white shadow-md shadow-[#FF4B82]/25 scale-105'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    ? 'bg-gradient-to-r from-[#FF4B82] to-[#6366F1] text-white shadow-md scale-105'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
