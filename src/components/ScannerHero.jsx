@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Camera, Upload, Search, Zap, CheckCircle2, RefreshCw, Barcode, Sparkles, AlertCircle, Globe, ShieldCheck } from 'lucide-react';
-import { Html5QrcodeScanner, Html5Qrcode } from 'html5-qrcode';
+import React, { useState, useRef } from 'react';
+import { Camera, Search, RefreshCw, Barcode, Sparkles, AlertCircle, Globe, ShieldCheck } from 'lucide-react';
+import { Html5Qrcode } from 'html5-qrcode';
 import { fetchProductByBarcode, searchFoodProducts } from '../services/openFoodFactsApi';
 
 export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning }) {
@@ -10,10 +10,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [scanError, setScanError] = useState(null);
-  const [isCameraActive, setIsCameraActive] = useState(false);
 
   const fileInputRef = useRef(null);
-  const scannerRef = useRef(null);
 
   // REAL AUTHENTIC EAN BARCODES
   const REAL_PRESET_BARCODES = [
@@ -43,7 +41,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     }
   };
 
-  // Handle Photo Capture or Upload barcode decoding
+  // Handle Photo Capture barcode decoding
   const handlePhotoCapture = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -52,7 +50,6 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     setScanError(null);
 
     try {
-      // 1. Try native browser BarcodeDetector API if available
       if ('BarcodeDetector' in window) {
         const barcodeDetector = new window.BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'] });
         const bitmap = await createImageBitmap(file);
@@ -64,7 +61,6 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
         }
       }
 
-      // 2. Fallback to html5-qrcode file scanner
       const html5Qrcode = new Html5Qrcode("reader-temp");
       const code = await html5Qrcode.scanFile(file, true);
       if (code) {
@@ -75,37 +71,9 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
       console.warn("Photo barcode scan fallback trigger:", err);
     }
 
-    // Default to initial demo product if photo barcode decoding needed fallback
+    // Default to Maggi demo barcode if barcode decoding needed fallback
     handleRealBarcodeFetch("8901058852370");
   };
-
-  // Initialize Live Web Camera Scanner
-  useEffect(() => {
-    if (activeTab === 'camera' && isCameraActive) {
-      const html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader",
-        { fps: 10, qrbox: { width: 220, height: 160 } },
-        false
-      );
-
-      html5QrcodeScanner.render(
-        (decodedText) => {
-          html5QrcodeScanner.clear();
-          setIsCameraActive(false);
-          handleRealBarcodeFetch(decodedText);
-        },
-        (error) => {}
-      );
-
-      scannerRef.current = html5QrcodeScanner;
-
-      return () => {
-        try {
-          html5QrcodeScanner.clear();
-        } catch (e) {}
-      };
-    }
-  }, [activeTab, isCameraActive]);
 
   const handleSearchSubmit = async (queryToSearch) => {
     const q = queryToSearch || searchQuery;
@@ -121,14 +89,14 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
   };
 
   return (
-    <section className="relative pt-4 pb-8 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="relative pt-4 pb-12 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div id="reader-temp" style={{ display: 'none' }}></div>
 
       {/* Hero Header Text */}
       <div className="text-center max-w-3xl mx-auto mb-6">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] sm:text-xs text-emerald-400 mb-3 font-semibold backdrop-blur-md">
           <Globe className="w-3.5 h-3.5 animate-spin text-emerald-400" />
-          <span>Real-Time Open Food Facts Global API</span>
+          <span>Real-Time Open Food Facts API</span>
         </div>
 
         <h1 className="text-2xl sm:text-4xl lg:text-6xl font-extrabold text-white tracking-tight leading-snug mb-2 font-['Outfit']">
@@ -191,10 +159,9 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
           </div>
         )}
 
-        {/* TAB 1: Mobile Native Camera & Barcode Scanner */}
+        {/* TAB 1: Mobile Native Camera Scan (Clean Camera Only, Live Video Removed) */}
         {activeTab === 'camera' && (
           <div className="text-center">
-            {/* Hidden native mobile camera input */}
             <input
               type="file"
               accept="image/*"
@@ -204,55 +171,33 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
               className="hidden"
             />
 
-            {isCameraActive ? (
-              <div className="relative w-full max-w-sm mx-auto rounded-2xl overflow-hidden border border-white/20 bg-black p-2">
-                <div id="reader" className="w-full text-white"></div>
-                <button
-                  onClick={() => setIsCameraActive(false)}
-                  className="mt-3 btn-secondary text-xs py-1.5 px-4"
-                >
-                  Close Camera
-                </button>
+            <div className="relative w-full h-48 sm:h-56 rounded-2xl border-2 border-dashed border-[#FF4B82]/40 bg-[#090D16]/90 flex flex-col items-center justify-center p-3">
+              {isScanning && <div className="laser-line" />}
+              
+              <div className="w-12 h-12 rounded-full bg-[#FF4B82]/10 border border-[#FF4B82]/30 flex items-center justify-center mb-2">
+                <Camera className={`w-6 h-6 text-[#FF4B82] ${isScanning ? 'animate-pulse' : ''}`} />
               </div>
-            ) : (
-              <div className="relative w-full h-48 sm:h-64 rounded-2xl border-2 border-dashed border-[#FF4B82]/40 bg-[#090D16]/90 flex flex-col items-center justify-center p-3">
-                {isScanning && <div className="laser-line" />}
-                
-                <div className="w-12 h-12 rounded-full bg-[#FF4B82]/10 border border-[#FF4B82]/30 flex items-center justify-center mb-2">
-                  <Camera className={`w-6 h-6 text-[#FF4B82] ${isScanning ? 'animate-pulse' : ''}`} />
-                </div>
 
-                <p className="text-xs sm:text-sm font-semibold text-white mb-1">
-                  {isScanning ? 'Fetching Live Data from OpenFoodFacts API...' : 'Ready to Scan Food Barcode'}
-                </p>
-                <p className="text-[11px] text-slate-400 max-w-xs mb-3">
-                  Snap photo of any food wrapper/barcode or test sample below
-                </p>
+              <p className="text-xs sm:text-sm font-semibold text-white mb-1">
+                {isScanning ? 'Fetching Live Data from API...' : 'Scan Food Barcode'}
+              </p>
+              <p className="text-[11px] text-slate-400 max-w-xs mb-3">
+                Tap button below to snap photo of barcode or packet
+              </p>
 
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={isScanning}
-                    className="btn-primary py-2 px-4 sm:py-2.5 sm:px-6 text-xs font-semibold"
-                  >
-                    <Camera className="w-4 h-4" />
-                    Take Photo / Scan Barcode
-                  </button>
-
-                  <button
-                    onClick={() => setIsCameraActive(true)}
-                    disabled={isScanning}
-                    className="btn-secondary py-2 px-3 text-xs"
-                  >
-                    Live Video
-                  </button>
-                </div>
-              </div>
-            )}
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isScanning}
+                className="btn-primary py-2.5 px-6 text-xs font-semibold"
+              >
+                <Camera className="w-4 h-4" />
+                <span>Scan Barcode / Take Photo</span>
+              </button>
+            </div>
           </div>
         )}
 
-        {/* TAB 2: Enter Barcode Number */}
+        {/* TAB 2: Enter Barcode Number (Fixed Icon Padding) */}
         {activeTab === 'barcodeInput' && (
           <div>
             <form
@@ -262,14 +207,37 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
               }}
               className="flex flex-col sm:flex-row gap-2 mb-3"
             >
-              <div className="relative flex-1">
-                <Barcode className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <div className="relative flex-1" style={{ position: 'relative' }}>
+                <Barcode 
+                  style={{
+                    position: 'absolute',
+                    left: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '16px',
+                    height: '16px',
+                    color: '#94A3B8',
+                    pointerEvents: 'none'
+                  }} 
+                />
                 <input
                   type="text"
                   value={barcodeInput}
                   onChange={(e) => setBarcodeInput(e.target.value)}
-                  placeholder="Enter 13-digit EAN barcode (e.g. 8901058852370)..."
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-[#FF4B82]"
+                  placeholder="Enter 13-digit barcode (e.g. 8901058852370)..."
+                  style={{
+                    width: '100%',
+                    paddingLeft: '38px',
+                    paddingRight: '12px',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    borderRadius: '12px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#FFFFFF',
+                    fontSize: '12px',
+                    outline: 'none'
+                  }}
                 />
               </div>
               <button type="submit" disabled={isScanning} className="btn-primary py-2.5 px-5 text-xs font-semibold shrink-0 justify-center">
@@ -282,18 +250,41 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
           </div>
         )}
 
-        {/* TAB 3: Real-Time Open Food Facts Database Search */}
+        {/* TAB 3: Real-Time Search (Fixed Search Icon Padding) */}
         {activeTab === 'search' && (
           <div>
             <form onSubmit={(e) => { e.preventDefault(); handleSearchSubmit(); }} className="flex gap-2 mb-3">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <div className="relative flex-1" style={{ position: 'relative' }}>
+                <Search 
+                  style={{
+                    position: 'absolute',
+                    left: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '16px',
+                    height: '16px',
+                    color: '#94A3B8',
+                    pointerEvents: 'none'
+                  }} 
+                />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Product name (e.g. Oats, Maggi, Lays)..."
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-[#FF4B82]"
+                  style={{
+                    width: '100%',
+                    paddingLeft: '38px',
+                    paddingRight: '12px',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    borderRadius: '12px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#FFFFFF',
+                    fontSize: '12px',
+                    outline: 'none'
+                  }}
                 />
               </div>
               <button type="submit" disabled={isSearching} className="btn-primary py-2.5 px-4 text-xs shrink-0">
@@ -323,7 +314,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
                     className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 cursor-pointer transition-all gap-2"
                   >
                     <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                      <img src={prod.image} alt={prod.name} className="w-9 h-9 object-cover rounded-lg shrink-0" />
+                      <img src={prod.image} alt={prod.name} style={{ width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} />
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-white truncate">{prod.name}</p>
                         <p className="text-[10px] text-slate-400 truncate">{prod.brand}</p>
@@ -341,7 +332,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
           </div>
         )}
 
-        {/* Real Product Barcode Demo Presets */}
+        {/* Real Product Barcode Demo Presets (Fixed 56px Thumbnail Dimensions) */}
         <div className="mt-5 pt-4 border-t border-white/10">
           <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
             <span className="flex items-center gap-1 text-emerald-400">
@@ -355,12 +346,34 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
               <button
                 key={item.code}
                 onClick={() => handleRealBarcodeFetch(item.code)}
-                className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 transition-all text-left group overflow-hidden w-full"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '10px 12px',
+                  borderRadius: '14px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  textAlign: 'left',
+                  width: '100%',
+                  overflow: 'hidden'
+                }}
+                className="hover:bg-white/[0.08] transition-all group"
               >
-                <img src={item.image} alt={item.name} className="w-9 h-9 rounded-lg object-cover shrink-0 group-hover:scale-105 transition-transform" />
-                <div className="min-w-0 flex-1 overflow-hidden">
-                  <p className="text-xs font-semibold text-white truncate leading-tight mb-0.5">{item.name}</p>
-                  <p className="text-[9px] text-emerald-400 font-mono">EAN: {item.code}</p>
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '10px',
+                    objectFit: 'cover',
+                    flexShrink: 0
+                  }}
+                />
+                <div style={{ minWidth: 0, flex: 1, overflow: 'hidden' }}>
+                  <p className="text-xs font-bold text-white truncate leading-tight mb-1">{item.name}</p>
+                  <p className="text-[10px] text-emerald-400 font-mono truncate">EAN: {item.code}</p>
                 </div>
               </button>
             ))}
