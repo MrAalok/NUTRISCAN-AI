@@ -15,7 +15,8 @@ app.get('/', (req, res) => {
     message: 'NutriScan AI Railway Backend Service is Live & Running!',
     health: '/api/health',
     endpoints: {
-      analyzePacket: 'POST /api/analyze-packet'
+      analyzePacket: 'POST /api/analyze-packet',
+      lookupProduct: 'POST /api/lookup-product'
     }
   });
 });
@@ -25,7 +26,59 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'NutriScan AI Railway Backend', timestamp: new Date() });
 });
 
-// Analyze Packet Photo using Gemini 2.5 Flash AI Vision
+/**
+ * Robust Multi-Model Gemini API Caller (tries gemini-1.5-flash, gemini-1.5-pro, gemini-2.0-flash-exp)
+ */
+async function callGeminiApi(promptText, cleanBase64 = null) {
+  if (!GEMINI_API_KEY) return null;
+
+  const models = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp'];
+
+  for (const model of models) {
+    try {
+      const parts = [{ text: promptText }];
+      if (cleanBase64) {
+        parts.push({
+          inline_data: {
+            mime_type: 'image/jpeg',
+            data: cleanBase64
+          }
+        });
+      }
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts }],
+            generationConfig: {
+              temperature: 0.1,
+              response_mime_type: 'application/json'
+            }
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (candidateText) {
+          return JSON.parse(candidateText.trim());
+        }
+      } else {
+        const errText = await response.text();
+        console.warn(`Gemini API model ${model} failed (${response.status}):`, errText);
+      }
+    } catch (err) {
+      console.warn(`Error trying model ${model}:`, err.message);
+    }
+  }
+  return null;
+}
+
+// Analyze Packet Photo using Gemini AI Vision
 app.post('/api/analyze-packet', async (req, res) => {
   try {
     const { base64Image } = req.body;
@@ -90,46 +143,12 @@ JSON structure:
 }
 `;
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                { text: promptText },
-                {
-                  inline_data: {
-                    mime_type: 'image/jpeg',
-                    data: cleanBase64
-                  }
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.1,
-            response_mime_type: 'application/json'
-          }
-        })
-      }
-    );
-
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      return res.status(500).json({ error: 'Gemini API Error', details: errText });
+    const result = await callGeminiApi(promptText, cleanBase64);
+    if (result) {
+      return res.json(result);
     }
 
-    const data = await geminiRes.json();
-    const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!candidateText) {
-      return res.status(500).json({ error: 'Empty AI response' });
-    }
-
-    const resultJson = JSON.parse(candidateText.trim());
-    return res.json(resultJson);
+    return res.status(500).json({ error: 'Failed to analyze image with Gemini AI' });
 
   } catch (err) {
     console.error('Railway Backend Packet Analysis Error:', err);
@@ -137,7 +156,7 @@ JSON structure:
   }
 });
 
-// Lookup product by barcode or product query using Gemini 2.5 Flash AI
+// Lookup product by barcode or product query using Gemini AI
 app.post('/api/lookup-product', async (req, res) => {
   try {
     const { barcode, query } = req.body;
@@ -199,34 +218,12 @@ JSON structure:
 Return ONLY valid JSON. No markdown wrappers.
 `;
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: promptText }] }],
-          generationConfig: {
-            temperature: 0.1,
-            response_mime_type: 'application/json'
-          }
-        })
-      }
-    );
-
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      return res.status(500).json({ error: 'Gemini API Error', details: errText });
+    const result = await callGeminiApi(promptText);
+    if (result) {
+      return res.json(result);
     }
 
-    const data = await geminiRes.json();
-    const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!candidateText) {
-      return res.status(500).json({ error: 'Empty AI response' });
-    }
-
-    const resultJson = JSON.parse(candidateText.trim());
-    return res.json(resultJson);
+    return res.status(500).json({ error: 'Failed to lookup product with Gemini AI' });
 
   } catch (err) {
     console.error('Railway Backend Product Lookup Error:', err);
