@@ -56,7 +56,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-900 selection:bg-[#FF4B82] selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-900 selection:bg-[#FF4B82] selection:text-white pb-28 md:pb-0">
       
       {/* Top Navigation Header */}
       <Navbar

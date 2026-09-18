@@ -86,6 +86,191 @@ export const INITIAL_FOOD_DATABASE = [
     ]
   },
   {
+    id: "parle-g-biscuits",
+    barcode: "8901030000013",
+    name: "Parle-G Original Glucose Biscuits",
+    brand: "Parle Products Pvt. Ltd.",
+    category: "Biscuits & Bakery",
+    image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&auto=format&fit=crop&q=80",
+    score: 42,
+    rating: "Yellow",
+    verdict: "Moderate Caution - High Sugar & Refined Wheat Flour",
+    servingSize: "65g",
+    caloriesPerServing: 290,
+    macros: {
+      protein: "4.2g",
+      carbs: "51.0g",
+      fat: "8.5g",
+      saturatedFat: "4.1g",
+      sugar: "17.0g",
+      sodium: "180mg",
+      fiber: "1.2g"
+    },
+    productInfo: {
+      productName: "Parle-G Original Glucose Biscuits",
+      brand: "Parle Products Pvt. Ltd.",
+      category: "Biscuits & Bakery",
+      netQuantity: "65 g",
+      mrp: "₹10.00 (Incl. of all taxes)",
+      manufacturer: "Parle Products Pvt. Ltd., North Level Crossing, Vile Parle East, Mumbai - 400057, Maharashtra • FSSAI Lic No: 10012022000071",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from Manufacturing Date (Batch: PG65M)",
+      consumerCare: "Toll-Free Helpline: 1800-22-3588 | Email: cs@parle.biz | Consumer Cell, Mumbai"
+    },
+    pros: [
+      "Quick energy boost with real wheat glucose",
+      "Affordable nutrition source"
+    ],
+    cons: [
+      "High added refined sugar (17g per pack)",
+      "Refined wheat flour (Maida) base",
+      "Contains vegetable palm oil"
+    ],
+    shortTermEffects: [
+      "Fast glycemic energy release",
+      "Sugar crash if eaten empty stomach"
+    ],
+    longTermEffects: [
+      "Risk of weight gain and dental cavities with frequent daily intake"
+    ],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "Contains 17g added sugar and high GI refined wheat." },
+      hypertension: { suitable: true, severity: "Safe", note: "Moderate sodium content (180mg)." },
+      obesity: { suitable: false, severity: "Caution", note: "High carbohydrate and sugar density." },
+      thyroid: { suitable: true, severity: "Safe", note: "Standard bakery ingredient profile." },
+      gymFitness: { suitable: true, severity: "Pre-Workout Energy", note: "Fast absorbing carbs before intense workouts." },
+      kidsParenting: { suitable: true, severity: "Moderate", note: "Limit daily quantity due to sugar content." }
+    },
+    additives: [
+      { code: "E503(ii)", name: "Ammonium Hydrogen Carbonate", risk: "Low", description: "Leavening agent for crisp texture." },
+      { code: "E500(ii)", name: "Sodium Hydrogen Carbonate", risk: "Low", description: "Baking powder." }
+    ],
+    alternatives: []
+  },
+  {
+    id: "cadbury-dairy-milk",
+    barcode: "8901233020945",
+    name: "Cadbury Dairy Milk Chocolate Bar",
+    brand: "Mondelez India Foods Pvt. Ltd.",
+    category: "Chocolates & Confectionery",
+    image: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=600&auto=format&fit=crop&q=80",
+    score: 28,
+    rating: "Red",
+    verdict: "Unhealthy - High Added Sugar & Milk Fats",
+    servingSize: "50g",
+    caloriesPerServing: 265,
+    macros: {
+      protein: "3.8g",
+      carbs: "29.5g",
+      fat: "15.2g",
+      saturatedFat: "9.5g",
+      sugar: "28.0g",
+      sodium: "75mg",
+      fiber: "1.0g"
+    },
+    productInfo: {
+      productName: "Cadbury Dairy Milk Milk Chocolate",
+      brand: "Mondelez India Foods Private Limited",
+      category: "Chocolates & Confectionery",
+      netQuantity: "50 g",
+      mrp: "₹45.00 (Incl. of all taxes)",
+      manufacturer: "Mondelez India Foods Pvt. Ltd., Unit No. 2001, 20th Floor, Tower-3, Indiabulls Finance Centre, Parel, Mumbai - 400013 • FSSAI Lic No: 10014022002711",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 12 months from Manufacturing Date (Batch: DM50B)",
+      consumerCare: "Toll-Free Helpline: 1800-22-7080 | Email: suggestions@mdlz.com | Consumer Cell, Mumbai"
+    },
+    pros: [
+      "Rich cocoa antioxidants",
+      "Creamy milk taste profile"
+    ],
+    cons: [
+      "Over 55% of weight is pure added sugar (28g sugar per 50g bar)",
+      "High saturated fat content (9.5g)",
+      "Calorically dense"
+    ],
+    shortTermEffects: [
+      "Dopamine spike and blood sugar elevation",
+      "Craving for additional sweet portion"
+    ],
+    longTermEffects: [
+      "Weight gain, insulin resistance, and dental cavities if consumed daily"
+    ],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "Critical Danger", note: "Contains 28g fast absorbing sugar. Rapid glucose spike!" },
+      hypertension: { suitable: true, severity: "Safe", note: "Low sodium content (75mg)." },
+      obesity: { suitable: false, severity: "Avoid", note: "High caloric & sugar density." },
+      thyroid: { suitable: false, severity: "Caution", note: "High sugar exacerbates metabolic inflammation." },
+      gymFitness: { suitable: false, severity: "Poor Choice", note: "High fat to protein ratio." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "High sugar impairs concentration and dental health." }
+    },
+    additives: [
+      { code: "E442", name: "Ammonium Phosphatides", risk: "Low", description: "Emulsifier for chocolate texture." },
+      { code: "E476", name: "PGPR", risk: "Moderate", description: "Synthetic emulsifier replacing cocoa butter." }
+    ],
+    alternatives: []
+  },
+  {
+    id: "kurkure-masala-munch",
+    barcode: "8901491001559",
+    name: "Kurkure Masala Munch Crunchy Snacks",
+    brand: "PepsiCo India Holdings Pvt. Ltd.",
+    category: "Packaged Salty Snacks",
+    image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&auto=format&fit=crop&q=80",
+    score: 35,
+    rating: "Red",
+    verdict: "Unhealthy - Deep Fried Palm Oil, High Sodium & MSG",
+    servingSize: "45g",
+    caloriesPerServing: 248,
+    macros: {
+      protein: "2.8g",
+      carbs: "25.2g",
+      fat: "15.3g",
+      saturatedFat: "6.8g",
+      sugar: "1.2g",
+      sodium: "420mg",
+      fiber: "1.8g"
+    },
+    productInfo: {
+      productName: "Kurkure Masala Munch Crunchy Snacks",
+      brand: "PepsiCo India Holdings Pvt. Ltd. (Frito-Lay)",
+      category: "Packaged Salty Snacks",
+      netQuantity: "45 g",
+      mrp: "₹20.00 (Incl. of all taxes)",
+      manufacturer: "PepsiCo India Holdings Pvt. Ltd., Patiala-Sangrur Road, Sangrur - 148028, Punjab • FSSAI Lic No: 10012063000110",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 4 months from Manufacturing Date (Batch: KK45M)",
+      consumerCare: "Toll-Free Helpline: 1800-22-7022 | Email: consumer.feedback@pepsico.com | PepsiCo Care, Gurugram"
+    },
+    pros: [
+      "Authentic Indian spice blend flavor"
+    ],
+    cons: [
+      "Deep fried in refined palmolein vegetable oil (~15.3g total fat)",
+      "High sodium concentration (420mg)",
+      "Contains flavor enhancers E621 MSG and E635"
+    ],
+    shortTermEffects: [
+      "Hyper-palatability triggers rapid overeating",
+      "Sodium-induced thirst and water retention"
+    ],
+    longTermEffects: [
+      "Increased cardiovascular stress and lipid profile deterioration"
+    ],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "Refined corn & rice meal rapidly converts to glucose." },
+      hypertension: { suitable: false, severity: "High Risk", note: "Contains 420mg sodium per bag. Strictly limit for High BP." },
+      obesity: { suitable: false, severity: "Avoid", note: "Calorically dense with high fried fat content." },
+      thyroid: { suitable: false, severity: "Caution", note: "Refined seed oils exacerbate systemic inflammation." },
+      gymFitness: { suitable: false, severity: "Poor Choice", note: "Low protein and high fried fat density." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "High sodium and MSG flavor enhancers." }
+    },
+    additives: [
+      { code: "E621", name: "MSG", risk: "Moderate", description: "Flavor enhancer." },
+      { code: "E635", name: "Disodium 5'-Ribonucleotides", risk: "Moderate", description: "Synergistic umami salt." }
+    ],
+    alternatives: []
+  },
+  {
     id: "cocacola-500ml",
     barcode: "5449000000996",
     name: "Coca-Cola Original Taste (500ml)",
