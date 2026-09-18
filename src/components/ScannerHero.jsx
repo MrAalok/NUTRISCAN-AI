@@ -39,7 +39,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     if (realProduct && realProduct.name && realProduct.name !== "Packaged Food Item") {
       onSelectProduct(realProduct);
     } else {
-      setScanError(`Product barcode "${code}" not found. Try taking a photo of the packet wrapper or searching by product name.`);
+      setScanError(`Barcode "${code}" is not in database. Please click the Search tab above to search by product name (e.g. Maggi, Lays, Oats).`);
     }
   };
 
@@ -98,7 +98,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
       if (aiResult && aiResult.name && aiResult.name !== "Packaged Food Item") {
         onSelectProduct(aiResult);
       } else {
-        setScanError("Could not read barcode or packet text clearly. Please try searching by product name in Search tab.");
+        setScanError("Could not read barcode from image. Please click the Search tab above to search by product name (e.g. Maggi, Lays, Oats).");
       }
     };
 

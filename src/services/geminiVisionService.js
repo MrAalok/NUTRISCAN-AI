@@ -103,7 +103,7 @@ Return ONLY valid JSON. No markdown formatting wrappers.
 const DEFAULT_RAILWAY_URL = "https://nutriscan-ai-production-1519.up.railway.app";
 
 /**
- * Call live Railway backend service to analyze packet image
+ * Call live Railway backend service to analyze packet image (with direct client API fallback)
  */
 export async function analyzePacketViaRailwayBackend(base64Image) {
   if (!base64Image) return null;
@@ -118,11 +118,27 @@ export async function analyzePacketViaRailwayBackend(base64Image) {
 
     if (res.ok) {
       const data = await res.json();
-      return data;
+      if (data && data.name && !data.error) {
+        return data;
+      }
     }
   } catch (err) {
     console.warn("Railway backend fetch failed:", err);
   }
+
+  // Client-side fallback if VITE_GEMINI_API_KEY is available
+  const clientApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (clientApiKey) {
+    try {
+      const directResult = await analyzeFoodLabelImage(base64Image, clientApiKey);
+      if (directResult && directResult.name) {
+        return directResult;
+      }
+    } catch (clientErr) {
+      console.warn("Direct Gemini API fallback failed:", clientErr);
+    }
+  }
+
   return null;
 }
 
