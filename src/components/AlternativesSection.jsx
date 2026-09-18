@@ -109,19 +109,22 @@ export default function AlternativesSection({ product, onSelectProduct }) {
                           href={p.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="py-2 px-2 rounded-xl border bg-slate-50 hover:bg-slate-100 border-slate-200 text-[10px] font-bold flex flex-col items-center justify-center text-center transition-all hover:scale-[1.03] relative shadow-sm"
+                          className="py-2 px-2 rounded-xl border bg-slate-50 hover:bg-slate-100 border-slate-200 text-[10px] font-bold flex flex-col items-center justify-center text-center transition-all hover:scale-[1.03] shadow-sm"
                         >
-                          {p.isLowest && (
-                            <span className="absolute -top-2 bg-emerald-600 text-white font-black text-[8px] px-1.5 rounded-full uppercase shadow-sm">
-                              Best Price
+                          <div className="flex items-center justify-center gap-1 w-full truncate">
+                            <span className="shrink-0">{p.logo}</span>
+                            <span className="truncate text-slate-900 font-bold">{p.name}</span>
+                          </div>
+                          <div className="flex items-center justify-center gap-1 mt-0.5">
+                            <span className="text-xs font-black text-slate-900 font-['Outfit']">
+                              {p.price}
                             </span>
-                          )}
-                          <span className="text-[10px] text-slate-900 font-bold flex items-center gap-1">
-                            <span>{p.logo}</span> {p.name}
-                          </span>
-                          <span className="text-xs font-black text-slate-900 font-['Outfit'] mt-0.5">
-                            {p.price}
-                          </span>
+                            {p.isLowest && (
+                              <span className="bg-emerald-600 text-white font-black text-[7px] px-1 py-0.5 rounded uppercase leading-none shrink-0">
+                                BEST
+                              </span>
+                            )}
+                          </div>
                         </a>
                       ))}
                     </div>

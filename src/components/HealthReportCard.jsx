@@ -137,14 +137,14 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
         {(() => {
           const prodInfo = product.productInfo || {
             productName: product.name,
-            brand: product.brand,
+            brand: product.brand && product.brand !== "Indian Packaged Food" ? product.brand : "Brand Owner",
             category: product.category,
             netQuantity: product.servingSize || "100 g",
-            mrp: "₹20 - ₹150 (Standard Pack MRP)",
-            manufacturer: `${product.brand} India Pvt. Ltd. • FSSAI Lic No: 10018011000294`,
+            mrp: "As per packet weight",
+            manufacturer: `${product.brand || 'Brand Owner'} • Refer to physical package label for exact factory location`,
             countryOfOrigin: "India 🇮🇳",
             dateInfo: "Best Before 6 to 9 months from Manufacturing Date",
-            consumerCare: `Toll-Free Helpline: 1800-102-2200 | Email: customercare@${(product.brand || 'food').toLowerCase().replace(/[^a-z]/g, '')}.in`
+            consumerCare: "Refer to customer helpline printed on package"
           };
 
           return (
@@ -290,19 +290,19 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 rounded-xl border flex flex-col justify-between transition-all group relative ${p.bgClass} hover:scale-[1.03] shadow-sm`}
+                    className={`p-3 rounded-xl border flex flex-col justify-between transition-all group ${p.bgClass} hover:scale-[1.03] shadow-sm`}
                   >
-                    {p.isLowest && (
-                      <span className="absolute -top-2 -right-1 text-[9px] font-black uppercase tracking-wider bg-emerald-600 text-white px-2 py-0.5 rounded-full shadow-md">
-                        🔥 BEST DEAL
-                      </span>
-                    )}
-
                     <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-bold text-slate-900 flex items-center gap-1">
-                          <span>{p.logo}</span> {p.name}
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5 min-w-0">
+                          <span className="shrink-0">{p.logo}</span>
+                          <span className="truncate">{p.name}</span>
                         </span>
+                        {p.isLowest && (
+                          <span className="text-[8px] font-black uppercase tracking-wider bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shrink-0 shadow-sm leading-none">
+                            BEST
+                          </span>
+                        )}
                       </div>
                       <p className="text-[10px] text-slate-500 font-semibold">{p.delivery}</p>
                     </div>
