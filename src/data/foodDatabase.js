@@ -1,5 +1,67 @@
 export const INITIAL_FOOD_DATABASE = [
   {
+    id: "parle-monaco-salty",
+    barcode: "8901719140570",
+    name: "Parle Monaco Crispy Light Salty Snack",
+    brand: "Parle Biscuits Pvt. Ltd.",
+    category: "Biscuits & Salty Snacks",
+    image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&auto=format&fit=crop&q=80",
+    score: 36,
+    rating: "Red",
+    verdict: "Unhealthy - High Sodium (891mg/100g) & Saturated Fats (9.7g/100g)",
+    servingSize: "185.6g pack (14.4g per serve)",
+    caloriesPerServing: 492,
+    macros: {
+      protein: "7.9g",
+      carbs: "68.8g",
+      fat: "20.6g",
+      saturatedFat: "9.7g",
+      sugar: "7.8g",
+      sodium: "891mg",
+      fiber: "1.5g"
+    },
+    productInfo: {
+      productName: "Parle Monaco Crispy Light Salty Snack",
+      brand: "Parle Biscuits Pvt. Ltd.",
+      category: "Biscuits & Salty Snacks",
+      netQuantity: "185.6 g",
+      mrp: "₹ 35.00 (Incl. of all taxes)",
+      manufacturer: "Parle Biscuits Pvt. Ltd., North Level Crossing, Vile Parle East, Mumbai, MH - 400057 • FSSAI Lic No: 10012021000043 / 10012022000118",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from Manufacturing Date",
+      consumerCare: "Phone: 1800 209 6929 | Email: cs@parle.biz | Web: www.parleproducts.com | Address: Consumer Care Cell, Parle Biscuits Pvt Ltd, Mumbai - 400057"
+    },
+    pros: [
+      "Crispy light texture",
+      "Trans-fat free (0g Trans Fat)"
+    ],
+    cons: [
+      "High sodium concentration (891mg per 100g)",
+      "Elevated saturated fat (9.7g per 100g)",
+      "Refined wheat flour (Maida) base"
+    ],
+    shortTermEffects: [
+      "Sodium thirst & fluid retention",
+      "Glycemic response"
+    ],
+    longTermEffects: [
+      "Cardiovascular stress if consumed in high quantities"
+    ],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "Contains 68.8g refined wheat carbs and 7.8g sugar." },
+      hypertension: { suitable: false, severity: "High Risk", note: "Contains 891mg sodium per 100g, strictly limit for high BP." },
+      obesity: { suitable: false, severity: "Caution", note: "Calorically dense (492 kcal/100g) with high fats." },
+      thyroid: { suitable: true, severity: "Safe", note: "Regulated bakery ingredients." },
+      gymFitness: { suitable: false, severity: "Poor Choice", note: "High fat to protein ratio." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "High sodium concentration." }
+    },
+    additives: [
+      { code: "E503(ii)", name: "Ammonium Hydrogen Carbonate", risk: "Low", description: "Leavening agent" },
+      { code: "E500(ii)", name: "Sodium Hydrogen Carbonate", risk: "Low", description: "Baking soda powder" }
+    ],
+    alternatives: []
+  },
+  {
     id: "maggi-2min",
     barcode: "8901058852370",
     name: "Maggi 2-Minute Masala Noodles",
