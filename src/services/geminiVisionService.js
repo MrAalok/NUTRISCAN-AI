@@ -99,3 +99,29 @@ Return ONLY valid JSON. No markdown formatting wrappers.
     return null;
   }
 }
+
+const DEFAULT_RAILWAY_URL = "https://nutriscan-ai-production-1519.up.railway.app";
+
+/**
+ * Call live Railway backend service to analyze packet image
+ */
+export async function analyzePacketViaRailwayBackend(base64Image) {
+  if (!base64Image) return null;
+  const backendUrl = import.meta.env.VITE_RAILWAY_BACKEND_URL || DEFAULT_RAILWAY_URL;
+
+  try {
+    const res = await fetch(`${backendUrl}/api/analyze-packet`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ base64Image })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch (err) {
+    console.warn("Railway backend fetch failed:", err);
+  }
+  return null;
+}
