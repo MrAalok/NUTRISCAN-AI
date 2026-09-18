@@ -1,6 +1,7 @@
 import { INITIAL_FOOD_DATABASE } from '../data/foodDatabase';
 import { INDIAN_GS1_BARCODE_DATABASE } from '../data/indianBarcodeDatabase';
 import { getHealthyAlternativesForProduct } from '../data/categoryAlternatives';
+import { analyzeProductViaRailwayBackend } from './geminiVisionService';
 
 /**
  * NutriScan Health - Real-World Indian Packaged Foods API Service
@@ -168,7 +169,12 @@ export function calculateNutriScore(nutriments, additivesCount, novaGroup, categ
 export function parseOpenFoodFactsProduct(offProduct) {
   if (!offProduct) return null;
 
-  const name = offProduct.product_name || offProduct.product_name_en || offProduct.product_name_hi || "Packaged Food Item";
+  const rawName = offProduct.product_name || offProduct.product_name_en || offProduct.product_name_hi;
+  if (!rawName || rawName === "Packaged Food Item" || rawName.trim() === "") {
+    return null; // Reject incomplete records
+  }
+
+  const name = rawName.trim();
   const brand = offProduct.brands || offProduct.brand_owner || "Indian Packaged Food";
   const barcode = offProduct.code || "N/A";
   const image = offProduct.image_front_url || offProduct.image_url || "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600&auto=format&fit=crop&q=80";
@@ -280,13 +286,13 @@ export function parseOpenFoodFactsProduct(offProduct) {
     "100 g";
 
   const mrpVal = offProduct.price || offProduct.mrp;
-  const mrp = mrpVal ? `₹${mrpVal} (Incl. of all taxes)` : "₹20 - ₹150 (As per packet weight)";
+  const mrp = mrpVal ? `₹${mrpVal} (Incl. of all taxes)` : "As per packet weight";
 
   // Check known Indian corporate brand matching
   const fullText = `${name} ${brand} ${offProduct.brands || ''} ${offProduct.brand_owner || ''}`.toLowerCase();
   const matchedBrand = KNOWN_BRAND_CORPORATE_DB.find(b => b.keywords.some(k => fullText.includes(k)));
 
-  let resolvedBrand = brand && brand !== "Indian Packaged Food" ? brand : (matchedBrand ? matchedBrand.company : "Packaged Brand Owner");
+  let resolvedBrand = brand && brand !== "Indian Packaged Food" ? brand : (matchedBrand ? matchedBrand.company : "Brand Owner");
   let manufacturer = "";
   let consumerCare = "";
 
@@ -295,12 +301,11 @@ export function parseOpenFoodFactsProduct(offProduct) {
     manufacturer = `${matchedBrand.mfg} • FSSAI Lic No: ${matchedBrand.fssai}`;
     consumerCare = `Toll-Free Helpline: ${matchedBrand.helpline} | Email: ${matchedBrand.email}`;
   } else {
-    // Real API fields fallback - NO fake "Indian Packaged Food Pvt. Ltd."
     const offMfg = offProduct.manufacturing_places || offProduct.origins || offProduct.brand_owner;
     const offOwner = offProduct.brands || offProduct.brand_owner || resolvedBrand;
     manufacturer = offMfg 
       ? `${offOwner} (Mfg Unit: ${offMfg}) • FSSAI Approved Pack`
-      : `${offOwner} • Refer to physical package label for exact factory location`;
+      : `${offOwner} • Refer to physical package label for factory location`;
 
     consumerCare = offProduct.customer_service || offProduct.contact_information || "Refer to consumer helpline printed on package";
   }
@@ -328,7 +333,7 @@ export function parseOpenFoodFactsProduct(offProduct) {
     id: `off-${barcode}`,
     barcode,
     name,
-    brand,
+    brand: resolvedBrand,
     category,
     image,
     score: finalScore,
@@ -357,7 +362,7 @@ export function parseOpenFoodFactsProduct(offProduct) {
 }
 
 /**
- * FETCH PRODUCT BY BARCODE (Prioritizes Indian Packaged Foods via in.openfoodfacts.org)
+ * FETCH PRODUCT BY BARCODE (Prioritizes Master GS1 Database & Railway AI Resolution)
  */
 export async function fetchProductByBarcode(barcode) {
   if (!barcode) return null;
@@ -388,7 +393,7 @@ export async function fetchProductByBarcode(barcode) {
     return copy;
   }
 
-  // 2. Query Open Food Facts REST API
+  // 3. Query Open Food Facts REST API
   const urls = [
     `https://in.openfoodfacts.org/api/v2/product/${cleanBarcode}.json`,
     `https://world.openfoodfacts.org/api/v2/product/${cleanBarcode}.json`
@@ -401,7 +406,7 @@ export async function fetchProductByBarcode(barcode) {
         const data = await res.json();
         if (data.status === 1 && data.product) {
           const parsed = parseOpenFoodFactsProduct(data.product);
-          if (parsed) {
+          if (parsed && parsed.name && parsed.name !== "Packaged Food Item") {
             parsed.alternatives = await fetchCategoryAlternatives(parsed.category, parsed.score);
             return parsed;
           }
@@ -412,58 +417,21 @@ export async function fetchProductByBarcode(barcode) {
     }
   }
 
-  // 3. Fallback for Indian barcodes without OFF crowdsourced records - NO FAKE company names
-  return createAuthenticIndianFallbackProduct(cleanBarcode);
-}
+  // 4. Try Live Railway Backend AI Lookup by Barcode Number
+  try {
+    const aiProduct = await analyzeProductViaRailwayBackend({ barcode: cleanBarcode });
+    if (aiProduct && aiProduct.name && aiProduct.name !== "Packaged Food Item") {
+      if (!aiProduct.alternatives || aiProduct.alternatives.length === 0) {
+        aiProduct.alternatives = getHealthyAlternativesForProduct(aiProduct.category || "Packaged Food", aiProduct.name);
+      }
+      return aiProduct;
+    }
+  } catch (err) {
+    console.warn("Railway backend AI barcode lookup failed:", err);
+  }
 
-function createAuthenticIndianFallbackProduct(barcode) {
-  return {
-    id: `barcode-${barcode}`,
-    barcode: barcode,
-    name: "Indian Packaged Food Item",
-    brand: "FSSAI Registered Brand Owner",
-    category: "Packaged Foods & Beverages",
-    image: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600&auto=format&fit=crop&q=80",
-    score: 65,
-    rating: "Yellow",
-    verdict: "Moderate - Standard FSSAI Regulated Food Profile",
-    servingSize: "100g",
-    caloriesPerServing: 320,
-    macros: {
-      protein: "6.0g",
-      carbs: "54.0g",
-      fat: "10.0g",
-      saturatedFat: "4.0g",
-      sugar: "8.0g",
-      sodium: "350mg",
-      fiber: "2.0g"
-    },
-    productInfo: {
-      productName: "Packaged Food Item",
-      brand: "FSSAI Registered Brand Owner",
-      category: "Packaged Foods & Beverages",
-      netQuantity: "As printed on package",
-      mrp: "As printed on packet label",
-      manufacturer: "FSSAI Registered Manufacturer • Refer to physical package label for exact factory location",
-      countryOfOrigin: "India 🇮🇳",
-      dateInfo: "Best Before as printed on packet label",
-      consumerCare: "Refer to customer helpline printed on package"
-    },
-    pros: ["FSSAI regulated packaging standards", "Provides caloric metabolic energy"],
-    cons: ["Process refined ingredients", "Portion control recommended"],
-    shortTermEffects: ["Provides daily energy metabolism", "Satiety after consumption"],
-    longTermEffects: ["Maintain balanced intake with fresh whole foods"],
-    diseaseSuitability: {
-      diabetes: { suitable: true, severity: "Moderate", note: "Monitor portion size and sugar intake." },
-      hypertension: { suitable: true, severity: "Moderate", note: "Check sodium levels on packet label." },
-      obesity: { suitable: true, severity: "Portion Control", note: "Moderate caloric density." },
-      thyroid: { suitable: true, severity: "Safe", note: "Regulated food grade ingredients." },
-      gymFitness: { suitable: true, severity: "Moderate", note: "Provides carbohydrates for energy." },
-      kidsParenting: { suitable: true, severity: "Moderate", note: "Consume in moderation as part of a balanced diet." }
-    },
-    additives: [],
-    alternatives: getHealthyAlternativesForProduct("Packaged Foods & Beverages", "Packaged Food Item")
-  };
+  // If barcode is not in database and AI lookup returned nothing, return NULL (No fake dummy cards!)
+  return null;
 }
 
 /**
@@ -472,11 +440,33 @@ function createAuthenticIndianFallbackProduct(barcode) {
 export async function searchFoodProducts(query) {
   if (!query || query.trim() === "") return [];
 
-  const cleanQuery = query.trim();
+  const cleanQuery = query.trim().toLowerCase();
 
+  // 1. Search local databases first
+  const localMatches = INITIAL_FOOD_DATABASE.filter(item => 
+    item.name.toLowerCase().includes(cleanQuery) || 
+    item.brand.toLowerCase().includes(cleanQuery) ||
+    item.category.toLowerCase().includes(cleanQuery)
+  );
+
+  const gs1Matches = INDIAN_GS1_BARCODE_DATABASE.filter(item => 
+    item.name.toLowerCase().includes(cleanQuery) || 
+    item.brand.toLowerCase().includes(cleanQuery) ||
+    item.category.toLowerCase().includes(cleanQuery)
+  );
+
+  const combinedLocal = [...gs1Matches, ...localMatches];
+  if (combinedLocal.length > 0) {
+    // Deduplicate
+    const uniqueMap = new Map();
+    combinedLocal.forEach(p => uniqueMap.set(p.name, p));
+    return Array.from(uniqueMap.values());
+  }
+
+  // 2. Query Open Food Facts REST API
   const searchUrls = [
-    `https://in.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(cleanQuery)}&search_simple=1&action=process&json=1&page_size=16`,
-    `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(cleanQuery)}&country=india&countries_tags=en:india&search_simple=1&action=process&json=1&page_size=16`
+    `https://in.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query.trim())}&search_simple=1&action=process&json=1&page_size=16`,
+    `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query.trim())}&country=india&countries_tags=en:india&search_simple=1&action=process&json=1&page_size=16`
   ];
 
   for (const url of searchUrls) {
@@ -494,6 +484,19 @@ export async function searchFoodProducts(query) {
     } catch (err) {
       console.warn("India OFF search failed:", err);
     }
+  }
+
+  // 3. Fallback to Railway Backend AI Product Search
+  try {
+    const aiProduct = await analyzeProductViaRailwayBackend({ query: query.trim() });
+    if (aiProduct && aiProduct.name && aiProduct.name !== "Packaged Food Item") {
+      if (!aiProduct.alternatives || aiProduct.alternatives.length === 0) {
+        aiProduct.alternatives = getHealthyAlternativesForProduct(aiProduct.category || "Packaged Food", aiProduct.name);
+      }
+      return [aiProduct];
+    }
+  } catch (err) {
+    console.warn("Railway backend AI search lookup failed:", err);
   }
 
   return [];

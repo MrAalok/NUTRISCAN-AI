@@ -27,6 +27,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
   const HOUSEHOLD_SEARCH_CHIPS = ["Maggi", "Parle-G", "Amul Butter", "Dairy Milk", "Kurkure", "Lays India", "Bournvita", "Tata Dal"];
 
   // Fetch real barcode data from Master GS1 Database & OFF API
+  // Fetch real barcode data from Master GS1 Database, OFF API & Railway AI
   const handleRealBarcodeFetch = async (code) => {
     if (!code) return;
     setIsScanning(true);
@@ -35,10 +36,10 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     const realProduct = await fetchProductByBarcode(code);
     setIsScanning(false);
 
-    if (realProduct) {
+    if (realProduct && realProduct.name && realProduct.name !== "Packaged Food Item") {
       onSelectProduct(realProduct);
     } else {
-      setScanError(`Product barcode "${code}" not found. Try typing product name in Search.`);
+      setScanError(`Product barcode "${code}" not found. Try taking a photo of the packet wrapper or searching by product name.`);
     }
   };
 
@@ -55,27 +56,33 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
       const base64Image = event.target.result;
 
       try {
+        let code = null;
         if ('BarcodeDetector' in window) {
-          const barcodeDetector = new window.BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'] });
-          const bitmap = await createImageBitmap(file);
-          const barcodes = await barcodeDetector.detect(bitmap);
-          if (barcodes && barcodes.length > 0) {
-            const code = barcodes[0].rawValue;
-            const realProduct = await fetchProductByBarcode(code);
-            setIsScanning(false);
-            if (realProduct) {
-              onSelectProduct(realProduct);
-              return;
+          try {
+            const barcodeDetector = new window.BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'] });
+            const bitmap = await createImageBitmap(file);
+            const barcodes = await barcodeDetector.detect(bitmap);
+            if (barcodes && barcodes.length > 0) {
+              code = barcodes[0].rawValue;
             }
+          } catch (detErr) {
+            console.warn("BarcodeDetector error:", detErr);
           }
         }
 
-        const html5Qrcode = new Html5Qrcode("reader-temp");
-        const code = await html5Qrcode.scanFile(file, true);
+        if (!code) {
+          try {
+            const html5Qrcode = new Html5Qrcode("reader-temp");
+            code = await html5Qrcode.scanFile(file, true);
+          } catch (qrErr) {
+            console.warn("HTML5 QR Code scan failed:", qrErr);
+          }
+        }
+
         if (code) {
           const realProduct = await fetchProductByBarcode(code);
-          setIsScanning(false);
-          if (realProduct) {
+          if (realProduct && realProduct.name && realProduct.name !== "Packaged Food Item") {
+            setIsScanning(false);
             onSelectProduct(realProduct);
             return;
           }
@@ -84,14 +91,14 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
         console.warn("Barcode photo scan attempt:", err);
       }
 
-      // Send to Railway AI Vision Server if Barcode detector was empty
+      // Send to Railway AI Vision Server if Barcode detector was empty or returned unknown product
       const aiResult = await analyzePacketViaRailwayBackend(base64Image);
       setIsScanning(false);
 
-      if (aiResult && aiResult.name) {
+      if (aiResult && aiResult.name && aiResult.name !== "Packaged Food Item") {
         onSelectProduct(aiResult);
       } else {
-        setScanError("Could not read barcode or packet text clearly. Please try typing the product barcode or name below.");
+        setScanError("Could not read barcode or packet text clearly. Please try searching by product name in Search tab.");
       }
     };
 

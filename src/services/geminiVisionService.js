@@ -125,3 +125,27 @@ export async function analyzePacketViaRailwayBackend(base64Image) {
   }
   return null;
 }
+
+/**
+ * Call live Railway backend service to resolve product by barcode or query
+ */
+export async function analyzeProductViaRailwayBackend({ barcode, query }) {
+  if (!barcode && !query) return null;
+  const backendUrl = import.meta.env.VITE_RAILWAY_BACKEND_URL || DEFAULT_RAILWAY_URL;
+
+  try {
+    const res = await fetch(`${backendUrl}/api/lookup-product`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ barcode, query })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch (err) {
+    console.warn("Railway backend lookup failed:", err);
+  }
+  return null;
+}
