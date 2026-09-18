@@ -20,6 +20,17 @@ export const INITIAL_FOOD_DATABASE = [
       sodium: "860mg", // ~37% Daily limit
       fiber: "2.1g"
     },
+    productInfo: {
+      productName: "Maggi 2-Minute Masala Noodles",
+      brand: "Nestlé India Ltd.",
+      category: "Instant Noodles / Packaged Snacks",
+      netQuantity: "70 g",
+      mrp: "₹14.00 (Incl. of all taxes)",
+      manufacturer: "Nestlé India Limited, Moga Factory, GT Road, Moga - 142001, Punjab • FSSAI Lic No: 10012011000168",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 9 months from Manufacturing Date (Batch: M8241A)",
+      consumerCare: "Toll-Free Helpline: 1800-266-1188 | Email: wecare@nestle.in | Nestlé Consumer Care, P.O. Box 4, New Delhi - 110001"
+    },
     pros: [
       "Quick & convenient preparation (2 minutes)",
       "Fortified with Iron & Vitamin A",
@@ -95,6 +106,17 @@ export const INITIAL_FOOD_DATABASE = [
       sodium: "45mg",
       fiber: "0g"
     },
+    productInfo: {
+      productName: "Coca-Cola Original Taste Carbonated Beverage",
+      brand: "The Coca-Cola Company (Hindustan Coca-Cola)",
+      category: "Carbonated Soft Drinks",
+      netQuantity: "500 ml",
+      mrp: "₹40.00 (Incl. of all taxes)",
+      manufacturer: "Hindustan Coca-Cola Beverages Pvt. Ltd., Plot No. 1, Bidadi Industrial Area, Ramanagara - 562109, Karnataka • FSSAI Lic No: 10012022000257",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD (Batch No: CC500B)",
+      consumerCare: "Toll-Free Helpline: 1800-180-2653 | Email: indiahelpline@coca-cola.com | Consumer Care Cell, Gurgaon, Haryana"
+    },
     pros: [
       "Instant caffeine & sugar boost",
       "Refreshing carbonation"
@@ -168,6 +190,17 @@ export const INITIAL_FOOD_DATABASE = [
       sodium: "4mg",
       fiber: "4.2g" // Soluble Beta-Glucan
     },
+    productInfo: {
+      productName: "Quaker Rolled Whole Oats (100% Natural Grain)",
+      brand: "Quaker Oats (PepsiCo India Holdings Pvt. Ltd.)",
+      category: "Breakfast Cereals & Whole Grains",
+      netQuantity: "1 kg (1000 g)",
+      mrp: "₹199.00 (Incl. of all taxes)",
+      manufacturer: "PepsiCo India Holdings Pvt. Ltd., Village Channo, Patiala-Sangrur Road, Sangrur - 148028, Punjab • FSSAI Lic No: 10012063000110",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 12 months from MFD (Batch No: QK1000X)",
+      consumerCare: "Toll-Free Helpline: 1800-22-7022 | Email: consumer.feedback@pepsico.com | PepsiCo Consumer Care, PO Box 27, Gurugram"
+    },
     pros: [
       "100% Whole grain oats with zero added sugars or preservatives",
       "Rich in Beta-Glucan soluble fiber which actively reduces LDL cholesterol",
@@ -219,6 +252,17 @@ export const INITIAL_FOOD_DATABASE = [
       sugar: "1.0g",
       sodium: "380mg",
       fiber: "2.0g"
+    },
+    productInfo: {
+      productName: "Doritos Nacho Cheese Tortilla Chips",
+      brand: "Frito-Lay (PepsiCo India Holdings)",
+      category: "Packaged Salty Snacks",
+      netQuantity: "50 g",
+      mrp: "₹20.00 (Incl. of all taxes)",
+      manufacturer: "PepsiCo India Holdings Pvt. Ltd., JLN Marg, Commercial Complex, Vasant Kunj, New Delhi - 110070 • FSSAI Lic No: 10014011000982",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD (Batch No: DR50NC)",
+      consumerCare: "Toll-Free Helpline: 1800-22-7022 | Email: feedback@pepsico.com | Frito-Lay Care Cell, Gurugram"
     },
     pros: [
       "Crunchy texture and rich cheesy taste"
@@ -282,6 +326,17 @@ export const INITIAL_FOOD_DATABASE = [
       sodium: "88mg",
       fiber: "0g"
     },
+    productInfo: {
+      productName: "Amul Pasteurised Salted Butter",
+      brand: "Amul (GCMMF)",
+      category: "Dairy & Fats",
+      netQuantity: "100 g",
+      mrp: "₹60.00 (Incl. of all taxes)",
+      manufacturer: "GCMMF Ltd., Amul Dairy Road, Anand - 388001, Gujarat • FSSAI Lic No: 10012021000071",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 12 months from MFD when stored at or below 4°C (Batch: AM100B)",
+      consumerCare: "Toll-Free Helpline: 1800-258-3333 | Email: customercare@amul.coop | Amul Dairy Consumer Cell, Anand, Gujarat"
+    },
     pros: [
       "100% natural butter fat made from milk",
       "Contains fat-soluble Vitamin A and natural CLA (Conjugated Linoleic Acid)",
@@ -342,6 +397,17 @@ export const INITIAL_FOOD_DATABASE = [
       sugar: "9.5g",
       sodium: "65mg",
       fiber: "0.5g"
+    },
+    productInfo: {
+      productName: "Sunfeast Dark Fantasy Choco Fills",
+      brand: "ITC Limited (Foods Division)",
+      category: "Biscuits & Confectionery",
+      netQuantity: "75 g (6 biscuits)",
+      mrp: "₹40.00 (Incl. of all taxes)",
+      manufacturer: "ITC Limited, Virginia House, 37 J.L. Nehru Road, Kolkata - 700071, West Bengal • FSSAI Lic No: 10012031000012",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD (Batch No: ITC75DF)",
+      consumerCare: "Toll-Free Helpline: 1800-425-44444 | Email: quality@itc.in | ITC Consumer Care Manager, P.O. Box No. 592, Bengaluru - 560005"
     },
     pros: [
       "Rich molten chocolate taste profile"

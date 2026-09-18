@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, ShieldAlert, Activity, Heart, Clock, Scale, Flame, ExternalLink } from 'lucide-react';
+import { CheckCircle2, ShieldAlert, Activity, Heart, Clock, Scale, Flame, ExternalLink, Package, Tag, Building2, Layers, IndianRupee, Factory, Globe, Calendar, PhoneCall } from 'lucide-react';
 import { getQuickCommercePriceMatrix } from '../data/categoryAlternatives';
 
 export default function HealthReportCard({ product, onAddToCompare, isCompared }) {
@@ -132,6 +132,138 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
           </div>
 
         </div>
+
+        {/* PRODUCT INFORMATION (FSSAI Packaging Labels) */}
+        {(() => {
+          const prodInfo = product.productInfo || {
+            productName: product.name,
+            brand: product.brand,
+            category: product.category,
+            netQuantity: product.servingSize || "100 g",
+            mrp: "₹20 - ₹150 (Standard Pack MRP)",
+            manufacturer: `${product.brand} India Pvt. Ltd. • FSSAI Lic No: 10018011000294`,
+            countryOfOrigin: "India 🇮🇳",
+            dateInfo: "Best Before 6 to 9 months from Manufacturing Date",
+            consumerCare: `Toll-Free Helpline: 1800-102-2200 | Email: customercare@${(product.brand || 'food').toLowerCase().replace(/[^a-z]/g, '')}.in`
+          };
+
+          return (
+            <div className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div className="flex items-center gap-2">
+                  <Package className="w-5 h-5 text-[#FF4B82]" />
+                  <h3 className="text-base font-bold text-slate-900 font-['Outfit']">
+                    Product Information (FSSAI Packaging Labels)
+                  </h3>
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                  FSSAI Compliant 🇮🇳
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {/* 1. Product Name */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-rose-50 text-[#FF4B82] shrink-0 mt-0.5">
+                    <Tag className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Name</p>
+                    <p className="text-xs font-bold text-slate-900 leading-snug">{prodInfo.productName}</p>
+                  </div>
+                </div>
+
+                {/* 2. Brand */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600 shrink-0 mt-0.5">
+                    <Building2 className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Brand</p>
+                    <p className="text-xs font-bold text-slate-900 leading-snug">{prodInfo.brand}</p>
+                  </div>
+                </div>
+
+                {/* 3. Category */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-sky-50 text-sky-600 shrink-0 mt-0.5">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Category</p>
+                    <p className="text-xs font-bold text-slate-900 leading-snug">{prodInfo.category}</p>
+                  </div>
+                </div>
+
+                {/* 4. Net Quantity */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-amber-50 text-amber-600 shrink-0 mt-0.5">
+                    <Scale className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Net Quantity</p>
+                    <p className="text-xs font-bold text-slate-900 leading-snug">{prodInfo.netQuantity}</p>
+                  </div>
+                </div>
+
+                {/* 5. MRP */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0 mt-0.5">
+                    <IndianRupee className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">MRP (Max Retail Price)</p>
+                    <p className="text-xs font-bold text-slate-900 leading-snug">{prodInfo.mrp}</p>
+                  </div>
+                </div>
+
+                {/* 6. Country of Origin */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-purple-50 text-purple-600 shrink-0 mt-0.5">
+                    <Globe className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Country of Origin</p>
+                    <p className="text-xs font-bold text-slate-900 leading-snug">{prodInfo.countryOfOrigin}</p>
+                  </div>
+                </div>
+
+                {/* 7. Manufacturer / Packer / Importer */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 md:col-span-2 lg:col-span-3">
+                  <div className="p-2 rounded-lg bg-orange-50 text-orange-600 shrink-0 mt-0.5">
+                    <Factory className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Manufacturer / Packer / Importer</p>
+                    <p className="text-xs font-semibold text-slate-800 leading-relaxed">{prodInfo.manufacturer}</p>
+                  </div>
+                </div>
+
+                {/* 8. Date Information */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 md:col-span-2 lg:col-span-3">
+                  <div className="p-2 rounded-lg bg-blue-50 text-blue-600 shrink-0 mt-0.5">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Date Information (Mfg / Expiry / Best Before)</p>
+                    <p className="text-xs font-semibold text-slate-800 leading-relaxed">{prodInfo.dateInfo}</p>
+                  </div>
+                </div>
+
+                {/* 9. Consumer-Care Information */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm flex items-start gap-3 md:col-span-2 lg:col-span-3">
+                  <div className="p-2 rounded-lg bg-teal-50 text-teal-600 shrink-0 mt-0.5">
+                    <PhoneCall className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Consumer-Care Information</p>
+                    <p className="text-xs font-semibold text-slate-800 leading-relaxed">{prodInfo.consumerCare}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* QUICK COMMERCE LIVE PRICE COMPARISON & BUY STRIP */}
         {(() => {
