@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, ShieldAlert, Activity, Heart, Clock, Scale, Flame, ExternalLink, Package, Tag, Building2, Layers, IndianRupee, Factory, Globe, Calendar, PhoneCall } from 'lucide-react';
+import { CheckCircle2, ShieldAlert, Activity, Heart, Clock, Scale, Flame, ExternalLink, Package, Tag, Building2, Layers, IndianRupee, Factory, Globe, Calendar, PhoneCall, Sparkles } from 'lucide-react';
 import { getQuickCommercePriceMatrix } from '../data/categoryAlternatives';
 
 export default function HealthReportCard({ product, onAddToCompare, isCompared }) {
@@ -290,19 +290,18 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 rounded-xl border flex flex-col justify-between transition-all group ${p.bgClass} hover:scale-[1.03] shadow-sm`}
+                    className={`p-3.5 pt-4 rounded-2xl border flex flex-col justify-between transition-all group relative overflow-hidden ${p.bgClass} hover:scale-[1.02] hover:shadow-md`}
                   >
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5 min-w-0">
-                          <span className="shrink-0">{p.logo}</span>
-                          <span className="truncate">{p.name}</span>
-                        </span>
-                        {p.isLowest && (
-                          <span className="text-[8px] font-black uppercase tracking-wider bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shrink-0 shadow-sm leading-none">
-                            BEST
-                          </span>
-                        )}
+                    {p.isLowest && (
+                      <span className="absolute top-0 right-0 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-bl-xl shadow-sm flex items-center gap-0.5">
+                        <Sparkles className="w-2.5 h-2.5" /> Best Deal
+                      </span>
+                    )}
+
+                    <div className="pt-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="shrink-0 text-sm">{p.logo}</span>
+                        <span className="text-xs font-bold text-slate-900 truncate">{p.name}</span>
                       </div>
                       <p className="text-[10px] text-slate-500 font-semibold">{p.delivery}</p>
                     </div>
