@@ -40,46 +40,54 @@ app.post('/api/analyze-packet', async (req, res) => {
     const cleanBase64 = base64Image.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, "");
 
     const promptText = `
-You are NutriScan AI, an expert FSSAI Indian Packaged Food Label Reader.
-Examine this food packet image carefully and extract all actual printed label details into a clean JSON object matching this exact structure:
+You are NutriScan AI, an expert FSSAI Indian Packaged Food Label Reader & Nutritional Analyzer.
+Examine this food packet image carefully and extract all ACTUAL printed label details from the image.
 
+IMPORTANT INSTRUCTIONS:
+1. Read the EXACT product name, brand name, and manufacturer printed on the package.
+2. Read the ACTUAL Nutritional Information table printed on the back/side of the pack (Per 100g or Per Serving).
+3. Do NOT copy sample numbers. Extract real values for Calories, Protein, Carbohydrates, Total Fat, Saturated Fat, Sugar, Sodium, and Fiber from the image.
+4. Calculate an authentic FSSAI health score (10 to 98) based on sugar, sodium, saturated fat, additives, and protein/fiber.
+5. Return ONLY a valid JSON object. No markdown wrappers.
+
+JSON structure:
 {
-  "name": "Exact product name printed on packet",
-  "brand": "Exact brand name printed on packet",
-  "category": "Food Category",
-  "servingSize": "Net Quantity printed",
-  "score": 45,
-  "rating": "Red",
-  "verdict": "Nutritional summary verdict based on FSSAI standards",
-  "caloriesPerServing": 310,
+  "name": "<Real Product Name from image>",
+  "brand": "<Real Brand Name from image>",
+  "category": "<Food Category, e.g. Instant Noodles, Biscuits, Chips, Milk, Juice, Butter>",
+  "servingSize": "<Serving size printed on pack>",
+  "score": <Calculated score 10-98 based on nutrients>,
+  "rating": "<Green|Yellow|Red>",
+  "verdict": "<Short 1-line health verdict based on FSSAI standards>",
+  "caloriesPerServing": <Numeric kcal>,
   "macros": {
-    "protein": "7.8g",
-    "carbs": "46.2g",
-    "fat": "13.5g",
-    "saturatedFat": "6.2g",
-    "sugar": "1.5g",
-    "sodium": "860mg",
-    "fiber": "2.1g"
+    "protein": "<Real protein value, e.g. 7.5g>",
+    "carbs": "<Real carbs value, e.g. 52.0g>",
+    "fat": "<Real fat value, e.g. 14.0g>",
+    "saturatedFat": "<Real sat fat value, e.g. 6.0g>",
+    "sugar": "<Real sugar value, e.g. 2.0g>",
+    "sodium": "<Real sodium value in mg, e.g. 450mg>",
+    "fiber": "<Real fiber value, e.g. 2.0g>"
   },
   "productInfo": {
-    "productName": "Exact product name",
-    "brand": "Exact brand owner company",
-    "category": "Category",
-    "netQuantity": "Net weight/volume",
-    "mrp": "MRP ₹ printed on pack",
-    "manufacturer": "Exact Manufacturer/Packer name, address & FSSAI Lic No printed on pack",
+    "productName": "<Real Product Name>",
+    "brand": "<Real Brand Owner Company>",
+    "category": "<Food Category>",
+    "netQuantity": "<Net quantity/weight printed>",
+    "mrp": "<MRP printed on pack, e.g. ₹20 (Incl. of all taxes)>",
+    "manufacturer": "<Real Manufacturer / Packer name, factory address & FSSAI Lic No printed on pack>",
     "countryOfOrigin": "India 🇮🇳",
-    "dateInfo": "Mfg Date / Best Before date printed on pack",
-    "consumerCare": "Customer care helpline, email & address printed on pack"
+    "dateInfo": "<Mfg Date / Expiry / Best Before printed>",
+    "consumerCare": "<Helpline number or email printed on pack>"
   },
-  "pros": ["Nutritional advantage"],
-  "cons": ["Nutritional concern"],
-  "shortTermEffects": ["Short term effect"],
-  "longTermEffects": ["Long term effect"],
-  "additives": []
+  "pros": ["<Nutritional advantage 1>", "<Nutritional advantage 2>"],
+  "cons": ["<Nutritional risk/concern 1>", "<Nutritional risk/concern 2>"],
+  "shortTermEffects": ["<Short term effect 1>", "<Short term effect 2>"],
+  "longTermEffects": ["<Long term effect 1>"],
+  "additives": [
+    { "code": "<E-Number>", "name": "<Additive Name>", "risk": "<Low|Moderate|High>", "description": "<Short description>" }
+  ]
 }
-
-Return ONLY valid JSON.
 `;
 
     const geminiRes = await fetch(
@@ -146,43 +154,45 @@ You are NutriScan AI, an expert FSSAI Indian Packaged Food Database & Nutritiona
 The user is looking up an Indian packaged food item.
 Identifier / Query: ${barcode ? `Barcode number ${barcode}` : `Product name "${query}"`}
 
-Analyze and return the EXACT real-world Indian packaged food details for this item in a clean JSON object matching this exact structure:
+Analyze and return the EXACT real-world Indian packaged food details for this item in a clean JSON object.
+Do NOT use generic fallback placeholders like "Packaged Food Item". Find the exact real product name, manufacturer, and nutritional values.
 
+JSON structure:
 {
   "id": "ai-${barcode || query}",
   "barcode": "${barcode || 'N/A'}",
-  "name": "Exact real product name (e.g. Britannia Good Day Butter Cookies)",
-  "brand": "Exact real brand owner company name",
-  "category": "Food Category",
-  "servingSize": "Standard serving size (e.g. 75g)",
-  "score": 42,
-  "rating": "Yellow",
-  "verdict": "Nutritional summary verdict based on FSSAI & WHO standards",
-  "caloriesPerServing": 320,
+  "name": "<Exact real product name>",
+  "brand": "<Exact real brand owner company name>",
+  "category": "<Food Category>",
+  "servingSize": "<Standard serving size>",
+  "score": <Calculated score 10-98 based on nutrients>,
+  "rating": "<Green|Yellow|Red>",
+  "verdict": "<Nutritional summary verdict based on FSSAI standards>",
+  "caloriesPerServing": <Numeric kcal>,
   "macros": {
-    "protein": "6.0g",
-    "carbs": "68.0g",
-    "fat": "18.0g",
-    "saturatedFat": "8.5g",
-    "sugar": "24.0g",
-    "sodium": "220mg",
-    "fiber": "1.5g"
+    "protein": "<Protein value, e.g. 6.0g>",
+    "carbs": "<Carbs value, e.g. 68.0g>",
+    "fat": "<Fat value, e.g. 18.0g>",
+    "saturatedFat": "<Sat fat value, e.g. 8.5g>",
+    "sugar": "<Sugar value, e.g. 24.0g>",
+    "sodium": "<Sodium value in mg, e.g. 220mg>",
+    "fiber": "<Fiber value, e.g. 1.5g>"
   },
   "productInfo": {
-    "productName": "Exact product name",
-    "brand": "Exact brand owner company",
-    "category": "Category",
-    "netQuantity": "Net quantity",
-    "mrp": "MRP ₹ (approx.)",
-    "manufacturer": "Exact Manufacturer name, address & FSSAI Lic No if known",
+    "productName": "<Exact product name>",
+    "brand": "<Exact brand owner company>",
+    "category": "<Food Category>",
+    "netQuantity": "<Net quantity>",
+    "mrp": "<MRP ₹>",
+    "manufacturer": "<Exact Manufacturer name, address & FSSAI Lic No>",
     "countryOfOrigin": "India 🇮🇳",
     "dateInfo": "Best Before 6 to 9 months from MFD",
-    "consumerCare": "Customer care helpline & email"
+    "consumerCare": "<Customer care helpline & email>"
   },
-  "pros": ["Nutritional advantage 1", "Nutritional advantage 2"],
-  "cons": ["Nutritional concern 1", "Nutritional concern 2"],
-  "shortTermEffects": ["Short term effect 1"],
-  "longTermEffects": ["Long term effect 1"],
+  "pros": ["<Nutritional advantage 1>", "<Nutritional advantage 2>"],
+  "cons": ["<Nutritional concern 1>", "<Nutritional concern 2>"],
+  "shortTermEffects": ["<Short term effect 1>"],
+  "longTermEffects": ["<Long term effect 1>"],
   "additives": []
 }
 

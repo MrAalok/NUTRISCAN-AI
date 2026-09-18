@@ -109,20 +109,14 @@ export default function AlternativesSection({ product, onSelectProduct }) {
                           href={p.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="py-2.5 px-2 rounded-xl border bg-slate-50 hover:bg-slate-100 border-slate-200 text-[10px] font-bold flex flex-col items-center justify-center text-center transition-all hover:scale-[1.03] shadow-sm relative overflow-hidden"
+                          className="py-2.5 px-2 rounded-xl border bg-slate-50 hover:bg-slate-100 border-slate-200 text-[10px] font-bold flex flex-col items-center justify-center text-center transition-all hover:scale-[1.03] shadow-sm"
                         >
-                          {p.isLowest && (
-                            <span className="absolute top-0 right-0 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[7px] sm:text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-bl-lg shadow-sm flex items-center gap-0.5">
-                              <Sparkles className="w-2 h-2" /> Best
-                            </span>
-                          )}
-
-                          <div className="flex items-center justify-center gap-1 w-full truncate pt-1">
+                          <div className="flex items-center justify-center gap-1 w-full truncate">
                             <span className="shrink-0">{p.logo}</span>
                             <span className="truncate text-slate-900 font-bold">{p.name}</span>
                           </div>
                           <div className="flex items-center justify-center gap-1 mt-0.5">
-                            <span className="text-xs font-black text-slate-900 font-['Outfit']">
+                            <span className={`text-xs font-black font-['Outfit'] ${p.isLowest ? 'text-emerald-600 font-extrabold' : 'text-slate-900'}`}>
                               {p.price}
                             </span>
                           </div>

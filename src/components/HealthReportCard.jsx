@@ -290,15 +290,9 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                     href={p.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3.5 pt-4 rounded-2xl border flex flex-col justify-between transition-all group relative overflow-hidden ${p.bgClass} hover:scale-[1.02] hover:shadow-md`}
+                    className={`p-3.5 pt-4 rounded-2xl border flex flex-col justify-between transition-all group ${p.bgClass} hover:scale-[1.02] hover:shadow-md`}
                   >
-                    {p.isLowest && (
-                      <span className="absolute top-0 right-0 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-bl-xl shadow-sm flex items-center gap-0.5">
-                        <Sparkles className="w-2.5 h-2.5" /> Best Deal
-                      </span>
-                    )}
-
-                    <div className="pt-1">
+                    <div>
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="shrink-0 text-sm">{p.logo}</span>
                         <span className="text-xs font-bold text-slate-900 truncate">{p.name}</span>
@@ -307,7 +301,7 @@ export default function HealthReportCard({ product, onAddToCompare, isCompared }
                     </div>
 
                     <div className="mt-3 flex items-center justify-between pt-2 border-t border-slate-200">
-                      <span className="text-lg font-black text-slate-900 font-['Outfit'] group-hover:text-emerald-600 transition-colors">
+                      <span className={`text-lg font-black font-['Outfit'] transition-colors ${p.isLowest ? 'text-emerald-600 font-extrabold' : 'text-slate-900'}`}>
                         {p.price}
                       </span>
                       <span className="text-[10px] font-bold underline flex items-center gap-0.5 text-slate-600">
