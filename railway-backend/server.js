@@ -9,6 +9,17 @@ app.use(express.json({ limit: '10mb' }));
 const PORT = process.env.PORT || 5000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
+// Root Welcome Route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'NutriScan AI Railway Backend Service is Live & Running!',
+    health: '/api/health',
+    endpoints: {
+      analyzePacket: 'POST /api/analyze-packet'
+    }
+  });
+});
+
 // Health Check Endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'NutriScan AI Railway Backend', timestamp: new Date() });
