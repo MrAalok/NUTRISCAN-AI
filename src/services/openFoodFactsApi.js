@@ -1,4 +1,5 @@
 import { INITIAL_FOOD_DATABASE } from '../data/foodDatabase';
+import { INDIAN_GS1_BARCODE_DATABASE } from '../data/indianBarcodeDatabase';
 import { getHealthyAlternativesForProduct } from '../data/categoryAlternatives';
 
 /**
@@ -362,7 +363,17 @@ export async function fetchProductByBarcode(barcode) {
   if (!barcode) return null;
   const cleanBarcode = barcode.toString().trim();
 
-  // 1. Check local curated Indian food database FIRST (Maggi, Amul, Parle-G, Dairy Milk, Kurkure, Quaker Oats, etc.)
+  // 1. Check Master GS1 India Barcode Database FIRST
+  const gs1Match = INDIAN_GS1_BARCODE_DATABASE.find(item => item.barcode === cleanBarcode);
+  if (gs1Match) {
+    const copy = JSON.parse(JSON.stringify(gs1Match));
+    if (!copy.alternatives || copy.alternatives.length === 0) {
+      copy.alternatives = getHealthyAlternativesForProduct(copy.category, copy.name);
+    }
+    return copy;
+  }
+
+  // 2. Check local curated Indian food database
   const localMatch = INITIAL_FOOD_DATABASE.find(item => 
     item.barcode === cleanBarcode || 
     item.id === cleanBarcode ||
