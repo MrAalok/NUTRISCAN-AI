@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Camera, Search, RefreshCw, Barcode, AlertCircle } from 'lucide-react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { fetchProductByBarcode, searchFoodProducts } from '../services/openFoodFactsApi';
+import { analyzePacketViaRailwayBackend } from '../services/geminiVisionService';
 
 export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning }) {
   const [activeTab, setActiveTab] = useState('camera'); // 'camera' | 'barcodeInput' | 'search'
@@ -25,7 +26,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
 
   const HOUSEHOLD_SEARCH_CHIPS = ["Maggi", "Parle-G", "Amul Butter", "Dairy Milk", "Kurkure", "Lays India", "Bournvita", "Tata Dal"];
 
-  // Fetch real barcode data from OpenFoodFacts API
+  // Fetch real barcode data from Master GS1 Database & OFF API
   const handleRealBarcodeFetch = async (code) => {
     if (!code) return;
     setIsScanning(true);
@@ -37,11 +38,11 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     if (realProduct) {
       onSelectProduct(realProduct);
     } else {
-      setScanError(`Product barcode "${code}" not found. Try searching by name.`);
+      setScanError(`Product barcode "${code}" not found. Try typing product name in Search.`);
     }
   };
 
-  // Handle Photo Capture barcode decoding
+  // Handle Photo Capture barcode decoding & Railway AI Vision
   const handlePhotoCapture = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -49,29 +50,52 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     setIsScanning(true);
     setScanError(null);
 
-    try {
-      if ('BarcodeDetector' in window) {
-        const barcodeDetector = new window.BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'] });
-        const bitmap = await createImageBitmap(file);
-        const barcodes = await barcodeDetector.detect(bitmap);
-        if (barcodes && barcodes.length > 0) {
-          const code = barcodes[0].rawValue;
-          handleRealBarcodeFetch(code);
-          return;
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const base64Image = event.target.result;
+
+      try {
+        if ('BarcodeDetector' in window) {
+          const barcodeDetector = new window.BarcodeDetector({ formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'] });
+          const bitmap = await createImageBitmap(file);
+          const barcodes = await barcodeDetector.detect(bitmap);
+          if (barcodes && barcodes.length > 0) {
+            const code = barcodes[0].rawValue;
+            const realProduct = await fetchProductByBarcode(code);
+            setIsScanning(false);
+            if (realProduct) {
+              onSelectProduct(realProduct);
+              return;
+            }
+          }
         }
+
+        const html5Qrcode = new Html5Qrcode("reader-temp");
+        const code = await html5Qrcode.scanFile(file, true);
+        if (code) {
+          const realProduct = await fetchProductByBarcode(code);
+          setIsScanning(false);
+          if (realProduct) {
+            onSelectProduct(realProduct);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Barcode photo scan attempt:", err);
       }
 
-      const html5Qrcode = new Html5Qrcode("reader-temp");
-      const code = await html5Qrcode.scanFile(file, true);
-      if (code) {
-        handleRealBarcodeFetch(code);
-        return;
-      }
-    } catch (err) {
-      console.warn("Photo barcode scan fallback trigger:", err);
-    }
+      // Send to Railway AI Vision Server if Barcode detector was empty
+      const aiResult = await analyzePacketViaRailwayBackend(base64Image);
+      setIsScanning(false);
 
-    handleRealBarcodeFetch("8901058852370");
+      if (aiResult && aiResult.name) {
+        onSelectProduct(aiResult);
+      } else {
+        setScanError("Could not read barcode or packet text clearly. Please try typing the product barcode or name below.");
+      }
+    };
+
+    reader.readAsDataURL(file);
   };
 
   const handleSearchSubmit = async (queryToSearch) => {
