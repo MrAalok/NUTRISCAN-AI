@@ -173,7 +173,8 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
 
   return (
     <section className="relative pt-4 pb-12 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div id="reader-temp" style={{ display: 'none' }}></div>
+      {/* Hidden offscreen container for Html5Qrcode file scan initialization */}
+      <div id="reader-temp" style={{ position: 'fixed', top: '-9999px', left: '-9999px', width: '400px', height: '400px', opacity: 0, pointerEvents: 'none' }}></div>
 
       {/* Hero Header Text */}
       <div className="text-center max-w-3xl mx-auto mb-6">
@@ -231,15 +232,23 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
 
         {/* Error Alert Banner */}
         {scanError && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
-            <span>{scanError}</span>
+          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
+              <span>{scanError}</span>
+            </div>
+            <button 
+              onClick={() => { setActiveTab('search'); setSearchQuery('Maggi'); handleSearchSubmit('Maggi'); }}
+              className="text-[10px] font-bold bg-rose-600 text-white px-2.5 py-1 rounded-md shrink-0"
+            >
+              Try Search
+            </button>
           </div>
         )}
 
         {/* TAB 1: Mobile Native Camera Scan */}
         {activeTab === 'camera' && (
-          <div className="text-center">
+          <div className="text-center space-y-4">
             <input
               type="file"
               accept="image/*"
@@ -249,28 +258,31 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
               className="hidden"
             />
 
-            <div className="relative w-full h-48 sm:h-56 rounded-2xl border-2 border-dashed border-[#FF4B82]/40 bg-slate-50 flex flex-col items-center justify-center p-3">
+            <div className="relative w-full min-h-[220px] rounded-2xl border-2 border-dashed border-[#FF4B82]/40 bg-slate-50 flex flex-col items-center justify-center p-4">
               {isScanning && <div className="laser-line" />}
               
               <div className="w-12 h-12 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mb-2">
                 <Camera className={`w-6 h-6 text-[#FF4B82] ${isScanning ? 'animate-pulse' : ''}`} />
               </div>
 
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
-                {isScanning ? 'Analyzing Nutrition Data...' : 'Scan Food Barcode'}
+              <p className="text-sm sm:text-base font-bold text-slate-900 mb-1">
+                {isScanning ? 'Analyzing Product Nutrition & Labels...' : 'Scan Food Barcode / Packet Photo'}
               </p>
-              <p className="text-[11px] text-slate-500 max-w-xs mb-3">
-                Tap button to snap photo of barcode or wrapper
+              
+              <p className="text-xs text-slate-500 max-w-sm mb-4">
+                Point your phone camera at any food barcode or packet label to read instant FSSAI health score.
               </p>
 
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={isScanning}
-                className="btn-primary py-2.5 px-6 text-xs font-semibold"
-              >
-                <Camera className="w-4 h-4" />
-                <span>Scan Barcode / Take Photo</span>
-              </button>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isScanning}
+                  className="btn-primary py-3 px-6 text-xs font-bold shadow-lg"
+                >
+                  <Camera className="w-4 h-4" />
+                  <span>Take Photo / Upload Packet</span>
+                </button>
+              </div>
             </div>
           </div>
         )}

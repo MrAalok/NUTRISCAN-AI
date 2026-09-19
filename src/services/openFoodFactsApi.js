@@ -169,7 +169,14 @@ export function calculateNutriScore(nutriments, additivesCount, novaGroup, categ
 export function parseOpenFoodFactsProduct(offProduct) {
   if (!offProduct) return null;
 
-  const rawName = offProduct.product_name || offProduct.product_name_en || offProduct.product_name_hi;
+  const rawName = offProduct.product_name || 
+                  offProduct.product_name_en || 
+                  offProduct.product_name_hi || 
+                  offProduct.product_name_fr || 
+                  offProduct.generic_name || 
+                  offProduct.abbreviated_product_name ||
+                  offProduct.brands;
+
   if (!rawName || rawName === "Packaged Food Item" || rawName.trim() === "") {
     return null; // Reject incomplete records
   }
@@ -366,10 +373,17 @@ export function parseOpenFoodFactsProduct(offProduct) {
  */
 export async function fetchProductByBarcode(barcode) {
   if (!barcode) return null;
-  const cleanBarcode = barcode.toString().trim();
+  const rawBarcode = barcode.toString().trim();
+  const cleanBarcode = rawBarcode.replace(/\D/g, '');
+
+  if (!cleanBarcode && !rawBarcode) return null;
 
   // 1. Check Master GS1 India Barcode Database FIRST
-  const gs1Match = INDIAN_GS1_BARCODE_DATABASE.find(item => item.barcode === cleanBarcode);
+  const gs1Match = INDIAN_GS1_BARCODE_DATABASE.find(item => 
+    item.barcode === cleanBarcode || 
+    item.barcode === rawBarcode ||
+    (item.barcode && cleanBarcode && (cleanBarcode.includes(item.barcode) || item.barcode.includes(cleanBarcode)))
+  );
   if (gs1Match) {
     const copy = JSON.parse(JSON.stringify(gs1Match));
     if (!copy.alternatives || copy.alternatives.length === 0) {
@@ -381,8 +395,9 @@ export async function fetchProductByBarcode(barcode) {
   // 2. Check local curated Indian food database
   const localMatch = INITIAL_FOOD_DATABASE.find(item => 
     item.barcode === cleanBarcode || 
+    item.barcode === rawBarcode ||
     item.id === cleanBarcode ||
-    (item.barcode && cleanBarcode.includes(item.barcode))
+    (item.barcode && cleanBarcode && (cleanBarcode.includes(item.barcode) || item.barcode.includes(cleanBarcode)))
   );
 
   if (localMatch) {
@@ -394,32 +409,35 @@ export async function fetchProductByBarcode(barcode) {
   }
 
   // 3. Query Open Food Facts REST API
-  const urls = [
-    `https://in.openfoodfacts.org/api/v2/product/${cleanBarcode}.json`,
-    `https://world.openfoodfacts.org/api/v2/product/${cleanBarcode}.json`
-  ];
+  const searchCodes = [cleanBarcode, rawBarcode].filter(Boolean);
+  for (const cCode of searchCodes) {
+    const urls = [
+      `https://in.openfoodfacts.org/api/v2/product/${cCode}.json`,
+      `https://world.openfoodfacts.org/api/v2/product/${cCode}.json`
+    ];
 
-  for (const url of urls) {
-    try {
-      const res = await fetch(url);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.status === 1 && data.product) {
-          const parsed = parseOpenFoodFactsProduct(data.product);
-          if (parsed && parsed.name && parsed.name !== "Packaged Food Item") {
-            parsed.alternatives = await fetchCategoryAlternatives(parsed.category, parsed.score);
-            return parsed;
+    for (const url of urls) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.status === 1 && data.product) {
+            const parsed = parseOpenFoodFactsProduct(data.product);
+            if (parsed && parsed.name && parsed.name !== "Packaged Food Item") {
+              parsed.alternatives = await fetchCategoryAlternatives(parsed.category, parsed.score);
+              return parsed;
+            }
           }
         }
+      } catch (err) {
+        console.warn("India OFF API fetch attempt:", err);
       }
-    } catch (err) {
-      console.warn("India OFF API fetch attempt:", err);
     }
   }
 
   // 4. Try Live Railway Backend AI Lookup by Barcode Number
   try {
-    const aiProduct = await analyzeProductViaRailwayBackend({ barcode: cleanBarcode });
+    const aiProduct = await analyzeProductViaRailwayBackend({ barcode: cleanBarcode || rawBarcode });
     if (aiProduct && aiProduct.name && aiProduct.name !== "Packaged Food Item") {
       if (!aiProduct.alternatives || aiProduct.alternatives.length === 0) {
         aiProduct.alternatives = getHealthyAlternativesForProduct(aiProduct.category || "Packaged Food", aiProduct.name);
