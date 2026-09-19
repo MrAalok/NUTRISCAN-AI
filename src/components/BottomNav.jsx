@@ -27,7 +27,7 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
         justifyContent: 'space-around',
         boxShadow: '0 -10px 25px rgba(15, 23, 42, 0.08)'
       }}
-      className="flex md:!hidden"
+      className="flex md:hidden"
     >
       {navItems.map((item) => {
         const Icon = item.icon;
