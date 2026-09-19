@@ -23,12 +23,11 @@ export default function BottomNav({ activeTab, setActiveTab, hasScannedProduct }
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         padding: '8px 12px',
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
         boxShadow: '0 -10px 25px rgba(15, 23, 42, 0.08)'
       }}
-      className="md:hidden"
+      className="flex md:!hidden"
     >
       {navItems.map((item) => {
         const Icon = item.icon;
