@@ -3,7 +3,6 @@ import confetti from 'canvas-confetti';
 import { ArrowLeft } from 'lucide-react';
 
 import Navbar from './components/Navbar';
-import BottomNav from './components/BottomNav';
 import ScannerHero from './components/ScannerHero';
 import HealthReportCard from './components/HealthReportCard';
 import DiseaseMatrix from './components/DiseaseMatrix';
@@ -170,13 +169,6 @@ export default function App() {
         )}
 
       </main>
-
-      {/* Mobile Native App Bottom Navigation Bar */}
-      <BottomNav
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        hasScannedProduct={!!selectedProduct}
-      />
 
       {/* Side by Side Comparison Modal */}
       <ComparisonModal
