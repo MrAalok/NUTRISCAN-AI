@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti';
 import { ArrowLeft } from 'lucide-react';
 
 import Navbar from './components/Navbar';
+import BottomNav from './components/BottomNav';
 import ScannerHero from './components/ScannerHero';
 import HealthReportCard from './components/HealthReportCard';
 import DiseaseMatrix from './components/DiseaseMatrix';
@@ -176,6 +177,12 @@ export default function App() {
         onClose={() => setIsCompareOpen(false)}
         compareList={compareList}
         onRemoveItem={handleRemoveFromCompare}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Hidden on Desktop) */}
+      <BottomNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
       />
 
       {/* Footer */}
