@@ -695,5 +695,398 @@ export const INITIAL_FOOD_DATABASE = [
         image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop&q=80"
       }
     ]
+  },
+  {
+    id: "lays-magic-masala",
+    barcode: "8901491101820",
+    name: "Lay's India's Magic Masala Chips",
+    brand: "PepsiCo India Holdings",
+    category: "Chips & Snacks",
+    image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&auto=format&fit=crop&q=80",
+    score: 30,
+    rating: "Red",
+    verdict: "Unhealthy - High Sodium & Palmolein Saturated Fat",
+    servingSize: "50g",
+    caloriesPerServing: 275,
+    macros: { protein: "3.5g", carbs: "26.0g", fat: "17.5g", saturatedFat: "7.8g", sugar: "1.2g", sodium: "480mg", fiber: "1.8g" },
+    productInfo: {
+      productName: "Lay's India's Magic Masala Potato Chips",
+      brand: "PepsiCo India Holdings Pvt. Ltd.",
+      category: "Chips & Snacks",
+      netQuantity: "52 g",
+      mrp: "₹20.00 (Incl. of all taxes)",
+      manufacturer: "PepsiCo India Holdings Pvt. Ltd., Village Channo, Patiala, Punjab • FSSAI Lic No: 10012063000110",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 4 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-22-4020 | Email: feedback@pepsico.com"
+    },
+    pros: ["Authentic spicy Indian masala blend", "Crispy fried texture"],
+    cons: ["High palmolein oil content (17.5g total fat per serve)", "High sodium concentration (480mg per pack)", "Deep-fried potato starch with low fiber"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "High GI fried starch." },
+      hypertension: { suitable: false, severity: "High Risk", note: "High sodium level per serving." },
+      obesity: { suitable: false, severity: "Avoid", note: "Calorically dense fried snack." },
+      thyroid: { suitable: false, severity: "Caution", note: "Refined palmolein fat." },
+      gymFitness: { suitable: false, severity: "Avoid", note: "High fat to protein ratio." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "High sodium and MSG flavor enhancers." }
+    },
+    additives: [
+      { code: "E621", name: "Monosodium Glutamate (MSG)", risk: "Moderate", description: "Flavor enhancer" },
+      { code: "E635", name: "Disodium 5'-Ribonucleotides", risk: "Moderate", description: "Umami salt" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "britannia-good-day-cashew",
+    barcode: "8901063013216",
+    name: "Britannia Good Day Cashew Biscuits",
+    brand: "Britannia Industries Ltd.",
+    category: "Biscuits & Bakery",
+    image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&auto=format&fit=crop&q=80",
+    score: 38,
+    rating: "Red",
+    verdict: "Unhealthy - High Added Sugar & Vegetable Fat",
+    servingSize: "60g",
+    caloriesPerServing: 305,
+    macros: { protein: "4.5g", carbs: "39.0g", fat: "15.0g", saturatedFat: "7.5g", sugar: "15.5g", sodium: "190mg", fiber: "1.0g" },
+    productInfo: {
+      productName: "Britannia Good Day Cashew Biscuits",
+      brand: "Britannia Industries Limited",
+      category: "Biscuits & Bakery",
+      netQuantity: "60 g",
+      mrp: "₹20.00 (Incl. of all taxes)",
+      manufacturer: "Britannia Industries Ltd., Executive Centre, Whitefield, Bengaluru - 560066 • FSSAI Lic No: 10015043001129",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-425-4449 | Email: feedback@britindia.com"
+    },
+    pros: ["Contains real cashew bits", "Butter-flavored crunch"],
+    cons: ["High refined sugar (15.5g per 60g pack)", "Refined wheat flour (Maida) base", "Hydrogenated vegetable palm fat"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "15.5g added sugar." },
+      hypertension: { suitable: true, severity: "Safe", note: "Moderate sodium." },
+      obesity: { suitable: false, severity: "Caution", note: "Calorically dense." },
+      thyroid: { suitable: true, severity: "Safe", note: "Standard bakery fats." },
+      gymFitness: { suitable: false, severity: "Poor Choice", note: "Low protein quality." },
+      kidsParenting: { suitable: false, severity: "Moderate", note: "Limit daily intake due to sugar." }
+    },
+    additives: [
+      { code: "E503(ii)", name: "Ammonium Bicarbonate", risk: "Low", description: "Leavening agent" },
+      { code: "E322", name: "Soy Lecithin", risk: "Low", description: "Emulsifier" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "oreo-original-vanilla",
+    barcode: "8901233022109",
+    name: "Oreo Original Vanilla Cream Biscuits",
+    brand: "Mondelez India Foods",
+    category: "Biscuits & Confectionery",
+    image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&auto=format&fit=crop&q=80",
+    score: 25,
+    rating: "Red",
+    verdict: "Unhealthy - Extremely High Added Sugar & Palm Fat",
+    servingSize: "50g (5 biscuits)",
+    caloriesPerServing: 240,
+    macros: { protein: "2.5g", carbs: "35.0g", fat: "10.0g", saturatedFat: "5.0g", sugar: "19.0g", sodium: "220mg", fiber: "1.2g" },
+    productInfo: {
+      productName: "Oreo Original Sandwich Biscuits (Vanilla Cream)",
+      brand: "Mondelez India Foods Pvt. Ltd.",
+      category: "Biscuits & Confectionery",
+      netQuantity: "120 g",
+      mrp: "₹35.00 (Incl. of all taxes)",
+      manufacturer: "Mondelez India Foods Pvt. Ltd., Mumbai, MH - 400013 • FSSAI Lic No: 10014022002711",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 9 months from MFD",
+      consumerCare: "Helpline: 1800-22-7080 | Email: suggestions@mdlz.com"
+    },
+    pros: ["Iconic chocolate sandwich cookie taste"],
+    cons: ["Over 38% of biscuit weight is pure added sugar (19g sugar per 50g serve)", "Refined palm oil center filling", "Low fiber and high calorie density"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "Critical Danger", note: "19g added sugar per serve!" },
+      hypertension: { suitable: true, severity: "Moderate", note: "Moderate sodium." },
+      obesity: { suitable: false, severity: "Avoid", note: "Hyper-palatable dessert biscuit." },
+      thyroid: { suitable: false, severity: "Avoid", note: "High sugar and palm fat." },
+      gymFitness: { suitable: false, severity: "Avoid", note: "Empty calories." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "Causes sugar rushes and tooth decay." }
+    },
+    additives: [
+      { code: "E322", name: "Soy Lecithin", risk: "Low", description: "Emulsifier" },
+      { code: "E500(ii)", name: "Sodium Bicarbonate", risk: "Low", description: "Raising agent" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "saffola-oats-natural",
+    barcode: "8901088056006",
+    name: "Saffola Oats 100% Natural Whole Grain",
+    brand: "Marico Limited",
+    category: "Breakfast Cereals & Oats",
+    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&auto=format&fit=crop&q=80",
+    score: 94,
+    rating: "Green",
+    verdict: "Super Healthy - 100% Rolled Oats, High Beta-Glucan Fiber",
+    servingSize: "40g",
+    caloriesPerServing: 155,
+    macros: { protein: "5.5g", carbs: "26.0g", fat: "3.0g", saturatedFat: "0.6g", sugar: "0.4g", sodium: "3mg", fiber: "4.2g" },
+    productInfo: {
+      productName: "Saffola Oats 100% Natural Rolled Oats",
+      brand: "Marico Limited",
+      category: "Breakfast Cereals & Oats",
+      netQuantity: "500 g",
+      mrp: "₹110.00 (Incl. of all taxes)",
+      manufacturer: "Marico Limited, Grande Palladium, 175 CST Road, Kalina, Santacruz East, Mumbai - 400098 • FSSAI Lic No: 10012022000258",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 12 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-222-248 | Email: ccc@marico.com"
+    },
+    pros: ["100% Natural Rolled Oats with zero added sugar", "Rich in soluble Beta-Glucan fiber which lowers LDL cholesterol", "High satiety keeps you full for 4+ hours"],
+    cons: ["Plain taste requires natural fruits or milk pairing"],
+    diseaseSuitability: {
+      diabetes: { suitable: true, severity: "Excellent", note: "Low Glycemic Index helps stabilize blood sugar." },
+      hypertension: { suitable: true, severity: "Excellent", note: "Zero added salt; supports arterial health." },
+      obesity: { suitable: true, severity: "Ideal Choice", note: "High dietary fiber promotes weight loss." },
+      thyroid: { suitable: true, severity: "Safe", note: "Wholesome whole grain cereal." },
+      gymFitness: { suitable: true, severity: "Top Pre-Workout", note: "Clean complex carbs & protein." },
+      kidsParenting: { suitable: true, severity: "Super Healthy", note: "Ideal breakfast for growing children." }
+    },
+    additives: [],
+    alternatives: []
+  },
+  {
+    id: "epigamia-greek-yogurt-natural",
+    barcode: "8908007201019",
+    name: "Epigamia Natural Greek Yogurt (Zero Preservatives)",
+    brand: "Drums Food International",
+    category: "Dairy & Yogurt",
+    image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&auto=format&fit=crop&q=80",
+    score: 92,
+    rating: "Green",
+    verdict: "Super Healthy - High Protein (8g), Zero Added Sugar, Live Probiotics",
+    servingSize: "85g cup",
+    caloriesPerServing: 75,
+    macros: { protein: "8.0g", carbs: "4.5g", fat: "2.8g", saturatedFat: "1.8g", sugar: "3.5g", sodium: "45mg", fiber: "0g" },
+    productInfo: {
+      productName: "Epigamia Natural Greek Yogurt",
+      brand: "Drums Food International Pvt. Ltd.",
+      category: "Dairy & Yogurt",
+      netQuantity: "85 g",
+      mrp: "₹45.00 (Incl. of all taxes)",
+      manufacturer: "Drums Food International Pvt. Ltd., Kurla, Mumbai - 400070 • FSSAI Lic No: 10015022003848",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Use within 18 days from MFD (Keep Refrigerated)",
+      consumerCare: "Toll-Free Helpline: 1800-266-9999 | Email: hello@epigamia.com"
+    },
+    pros: ["Double strained Greek Yogurt with 2x Protein of regular dahi", "Zero added refined sugar; contains active live probiotic cultures", "Rich in calcium and natural gut-friendly microbes"],
+    cons: ["Must be stored refrigerated at 4°C"],
+    diseaseSuitability: {
+      diabetes: { suitable: true, severity: "Safe", note: "Zero added sugar; low glycemic load." },
+      hypertension: { suitable: true, severity: "Safe", note: "Low sodium dairy profile." },
+      obesity: { suitable: true, severity: "High Protein", note: "High protein promotes satiety and muscle preservation." },
+      thyroid: { suitable: true, severity: "Safe", note: "Clean dairy protein." },
+      gymFitness: { suitable: true, severity: "Ideal Snack", note: "8g quality protein per 85g cup." },
+      kidsParenting: { suitable: true, severity: "Super Healthy", note: "Great natural source of calcium & gut bacteria." }
+    },
+    additives: [],
+    alternatives: []
+  },
+  {
+    id: "paperboat-aamras",
+    barcode: "8906059530018",
+    name: "Paper Boat Aamras Mango Fruit Juice",
+    brand: "Hector Beverages Pvt. Ltd.",
+    category: "Beverages & Juices",
+    image: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&auto=format&fit=crop&q=80",
+    score: 46,
+    rating: "Yellow",
+    verdict: "Moderate - 45% Mango Pulp, High Added Sugar",
+    servingSize: "200ml bottle",
+    caloriesPerServing: 132,
+    macros: { protein: "0.4g", carbs: "32.6g", fat: "0g", saturatedFat: "0g", sugar: "26.0g", sodium: "15mg", fiber: "1.2g" },
+    productInfo: {
+      productName: "Paper Boat Aamras Real Mango Drink",
+      brand: "Hector Beverages Private Limited",
+      category: "Beverages & Juices",
+      netQuantity: "200 ml",
+      mrp: "₹35.00 (Incl. of all taxes)",
+      manufacturer: "Hector Beverages Pvt. Ltd., Plot No. 11-B, KIADB Industrial Area, Hoskote, Bengaluru - 562114 • FSSAI Lic No: 10012043000078",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-102-8929 | Email: customercare@hectorbeverages.com"
+    },
+    pros: ["Made with 45% real Alphonso/Mango pulp", "No artificial colors or preservatives"],
+    cons: ["High added sugar content (26g sugar per 200ml bottle)", "High glycemic response"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "26g fast-absorbing fructose & sucrose sugar." },
+      hypertension: { suitable: true, severity: "Safe", note: "Low sodium." },
+      obesity: { suitable: false, severity: "Caution", note: "Liquid sugar calories." },
+      thyroid: { suitable: true, severity: "Safe", note: "Natural fruit pulp base." },
+      gymFitness: { suitable: true, severity: "Post-Workout Energy", note: "Fast glycogen replenishment." },
+      kidsParenting: { suitable: false, severity: "Moderate", note: "Limit daily quantity due to high sugar." }
+    },
+    additives: [
+      { code: "E330", name: "Citric Acid", risk: "Low", description: "Natural acidity regulator" },
+      { code: "E300", name: "Ascorbic Acid (Vitamin C)", risk: "Low", description: "Antioxidant" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "sprite-crisp-lime",
+    barcode: "8901764012204",
+    name: "Sprite Crisp Lemon-Lime Sparkling Drink",
+    brand: "The Coca-Cola Company",
+    category: "Carbonated Soft Drinks",
+    image: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&auto=format&fit=crop&q=80",
+    score: 16,
+    rating: "Red",
+    verdict: "Unhealthy - 100% Liquid Added Sugar, Zero Fiber/Nutrients",
+    servingSize: "250ml",
+    caloriesPerServing: 120,
+    macros: { protein: "0g", carbs: "30.0g", fat: "0g", saturatedFat: "0g", sugar: "30.0g", sodium: "25mg", fiber: "0g" },
+    productInfo: {
+      productName: "Sprite Crisp Lemon-Lime Carbonated Water",
+      brand: "Coca-Cola India Pvt. Ltd.",
+      category: "Carbonated Soft Drinks",
+      netQuantity: "250 ml",
+      mrp: "₹20.00 (Incl. of all taxes)",
+      manufacturer: "Hindustan Coca-Cola Beverages Pvt. Ltd., Gurgaon, HR • FSSAI Lic No: 10012011000120",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-208-2653 | Email: indiahelpline@coca-cola.com"
+    },
+    pros: ["Instant cooling carbonated refreshment"],
+    cons: ["Contains 30g pure refined added sugar per 250ml (~6 teaspoons)", "Zero protein, zero fiber, zero vitamins", "Phosphoric/Citric acidity erodes tooth enamel"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "Critical Danger", note: "30g liquid sugar causes extreme glucose spikes!" },
+      hypertension: { suitable: false, severity: "Caution", note: "Liquid sugar increases metabolic inflammation." },
+      obesity: { suitable: false, severity: "Avoid", note: "Empty liquid calories with zero satiety." },
+      thyroid: { suitable: false, severity: "Avoid", note: "Disrupts insulin sensitivity." },
+      gymFitness: { suitable: false, severity: "Avoid", note: "Empty sugar." },
+      kidsParenting: { suitable: false, severity: "Avoid", note: "Leads to hyperactivity and dental cavities." }
+    },
+    additives: [
+      { code: "E330", name: "Citric Acid", risk: "Low", description: "Acidity regulator" },
+      { code: "E331", name: "Sodium Citrates", risk: "Low", description: "Buffering agent" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "bournvita-pro-health",
+    barcode: "8901233023007",
+    name: "Cadbury Bournvita Pro-Health Drink",
+    brand: "Mondelez India Foods",
+    category: "Health Drink Mixes",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&auto=format&fit=crop&q=80",
+    score: 40,
+    rating: "Red",
+    verdict: "Unhealthy - Over 50% Added Sugar & Maltodextrin",
+    servingSize: "20g powder (1 glass milk)",
+    caloriesPerServing: 78,
+    macros: { protein: "1.4g", carbs: "17.0g", fat: "0.4g", saturatedFat: "0.2g", sugar: "13.0g", sodium: "40mg", fiber: "0.6g" },
+    productInfo: {
+      productName: "Cadbury Bournvita Chocolate Health Drink Powder",
+      brand: "Mondelez India Foods Pvt. Ltd.",
+      category: "Health Drink Mixes",
+      netQuantity: "500 g",
+      mrp: "₹235.00 (Incl. of all taxes)",
+      manufacturer: "Mondelez India Foods Pvt. Ltd., Baddi, HP - 173205 • FSSAI Lic No: 10014022002711",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 12 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-22-7080 | Email: suggestions@mdlz.com"
+    },
+    pros: ["Fortified with Vitamin D, Calcium & Iron", "Popular malt chocolate taste"],
+    cons: ["Over 50% of the powder weight is added refined sugar + maltodextrin (13g sugar in 20g powder)", "Causes blood sugar spikes in children"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "High Risk", note: "Contains 13g added sugar per 20g serving." },
+      hypertension: { suitable: true, severity: "Safe", note: "Low sodium." },
+      obesity: { suitable: false, severity: "Caution", note: "Concentrated sugar powder." },
+      thyroid: { suitable: false, severity: "Avoid", note: "High glycemic load." },
+      gymFitness: { suitable: false, severity: "Poor Choice", note: "High sugar with low protein." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "High added sugar for daily children drinks." }
+    },
+    additives: [
+      { code: "E500(ii)", name: "Sodium Bicarbonate", risk: "Low", description: "Raising agent" },
+      { code: "E150c", name: "Caramel I - Plain", risk: "Low", description: "Natural malt color" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "haldirams-nagpur-bhujia",
+    barcode: "8904063200056",
+    name: "Haldiram's Nagpur Bhujia Sev",
+    brand: "Haldiram Snacks Pvt. Ltd.",
+    category: "Namkeen & Traditional Snacks",
+    image: "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=600&auto=format&fit=crop&q=80",
+    score: 28,
+    rating: "Red",
+    verdict: "Unhealthy - Deep Fried in Palmolein Oil, Extremely High Sodium",
+    servingSize: "40g",
+    caloriesPerServing: 235,
+    macros: { protein: "4.8g", carbs: "16.0g", fat: "17.0g", saturatedFat: "7.5g", sugar: "0.5g", sodium: "640mg", fiber: "2.0g" },
+    productInfo: {
+      productName: "Haldiram's Nagpur Crisp Spicy Bhujia Sev",
+      brand: "Haldiram Snacks Pvt. Ltd.",
+      category: "Namkeen & Traditional Snacks",
+      netQuantity: "200 g",
+      mrp: "₹55.00 (Incl. of all taxes)",
+      manufacturer: "Haldiram Snacks Pvt. Ltd., Noida, UP - 201307 • FSSAI Lic No: 10012051000099",
+      countryOfOrigin: "India 🇮🇳",
+      dateInfo: "Best Before 6 months from MFD",
+      consumerCare: "Toll-Free Helpline: 1800-102-5555 | Email: customercare@haldiram.com"
+    },
+    pros: ["Traditional Indian moth pulse & besan flavor", "Crispy spicy crunch"],
+    cons: ["Deep fried in palmolein oil (17g fat per 40g serve)", "High sodium concentration (640mg sodium per serving - over 28% daily limit)"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "Caution", note: "High saturated fat slows digestive motility." },
+      hypertension: { suitable: false, severity: "High Risk", note: "640mg sodium per 40g serving; strictly limit for high BP." },
+      obesity: { suitable: false, severity: "Avoid", note: "Calorically dense fried snack." },
+      thyroid: { suitable: false, severity: "Caution", note: "Deep fried palmolein oil." },
+      gymFitness: { suitable: false, severity: "Poor Choice", note: "High fat to protein ratio." },
+      kidsParenting: { suitable: false, severity: "Restrict", note: "High sodium concentration." }
+    },
+    additives: [
+      { code: "E330", name: "Citric Acid", risk: "Low", description: "Acidity regulator" }
+    ],
+    alternatives: []
+  },
+  {
+    id: "redbull-energy-drink",
+    barcode: "9002490100070",
+    name: "Red Bull Energy Drink (250ml)",
+    brand: "Red Bull GmbH",
+    category: "Energy Drinks",
+    image: "https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=600&auto=format&fit=crop&q=80",
+    score: 22,
+    rating: "Red",
+    verdict: "Unhealthy - High Synthetic Caffeine & Added Sugar",
+    servingSize: "250ml can",
+    caloriesPerServing: 115,
+    macros: { protein: "0g", carbs: "27.0g", fat: "0g", saturatedFat: "0g", sugar: "27.0g", sodium: "105mg", fiber: "0g" },
+    productInfo: {
+      productName: "Red Bull Energy Drink",
+      brand: "Red Bull GmbH, Austria",
+      category: "Energy Drinks",
+      netQuantity: "250 ml",
+      mrp: "₹125.00 (Incl. of all taxes)",
+      manufacturer: "Red Bull GmbH, Fuschl am See, Austria • FSSAI Lic No: 10012022000258",
+      countryOfOrigin: "Austria 🇦🇹",
+      dateInfo: "Best Before 24 months from MFD",
+      consumerCare: "Helpline: 1800-22-7332 | Email: info@in.redbull.com"
+    },
+    pros: ["Contains 80mg caffeine & Taurine for temporary alertness"],
+    cons: ["27g added refined sugar per 250ml can", "High caffeine (80mg per can) can trigger heart palpitations and anxiety", "Not recommended for children, pregnant women or caffeine-sensitive people"],
+    diseaseSuitability: {
+      diabetes: { suitable: false, severity: "Critical Danger", note: "27g fast-absorbing liquid sugar." },
+      hypertension: { suitable: false, severity: "High Risk", note: "Caffeine + Taurine spike blood pressure & heart rate." },
+      obesity: { suitable: false, severity: "Avoid", note: "Empty liquid sugar calories." },
+      thyroid: { suitable: false, severity: "Avoid", note: "Caffeine triggers adrenal cortisol response." },
+      gymFitness: { suitable: false, severity: "Caution", note: "High sugar pre-workout." },
+      kidsParenting: { suitable: false, severity: "STRICTLY PROHIBITED", note: "High caffeine content is dangerous for children." }
+    },
+    additives: [
+      { code: "E330", name: "Citric Acid", risk: "Low", description: "Acidity regulator" },
+      { code: "E150a", name: "Caramel I", risk: "Low", description: "Natural color" }
+    ],
+    alternatives: []
   }
 ];

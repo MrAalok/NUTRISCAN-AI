@@ -13,6 +13,12 @@ import ComparisonModal from './components/ComparisonModal';
 import Footer from './components/Footer';
 
 import { INITIAL_FOOD_DATABASE } from './data/foodDatabase';
+import { INDIAN_GS1_BARCODE_DATABASE } from './data/indianBarcodeDatabase';
+
+// Master combined food catalog
+const MASTER_FOOD_CATALOG = Array.from(
+  new Map([...INITIAL_FOOD_DATABASE, ...INDIAN_GS1_BARCODE_DATABASE].map(item => [item.id || item.barcode || item.name, item])).values()
+);
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(INITIAL_FOOD_DATABASE[0]);
@@ -178,7 +184,7 @@ export default function App() {
         compareList={compareList}
         setCompareList={setCompareList}
         onRemoveItem={handleRemoveFromCompare}
-        allProducts={INITIAL_FOOD_DATABASE}
+        allProducts={MASTER_FOOD_CATALOG}
       />
 
       {/* Mobile Bottom Navigation Bar (Hidden on Desktop) */}
