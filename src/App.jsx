@@ -176,7 +176,9 @@ export default function App() {
         isOpen={isCompareOpen}
         onClose={() => setIsCompareOpen(false)}
         compareList={compareList}
+        setCompareList={setCompareList}
         onRemoveItem={handleRemoveFromCompare}
+        allProducts={INITIAL_FOOD_DATABASE}
       />
 
       {/* Mobile Bottom Navigation Bar (Hidden on Desktop) */}
