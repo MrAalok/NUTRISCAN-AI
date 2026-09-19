@@ -158,10 +158,97 @@ export async function analyzeProductViaRailwayBackend({ barcode, query }) {
 
     if (res.ok) {
       const data = await res.json();
-      return data;
+      if (data && data.name && !data.error && data.name !== "Packaged Food Item") {
+        return data;
+      }
     }
   } catch (err) {
     console.warn("Railway backend lookup failed:", err);
   }
+
+  // Client-side Gemini fallback if client key exists
+  const clientApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (clientApiKey) {
+    try {
+      const promptText = `
+You are NutriScan AI, an expert FSSAI Indian Packaged Food Database & Nutritional Analyzer.
+The user is looking up an Indian packaged food item.
+Identifier / Query: ${barcode ? `Barcode number ${barcode}` : `Product name "${query}"`}
+
+Analyze and return the EXACT real-world Indian packaged food details for this item in a clean JSON object.
+Do NOT use generic fallback placeholders like "Packaged Food Item". Find the exact real product name, manufacturer, and nutritional values.
+
+JSON structure:
+{
+  "id": "ai-${barcode || query}",
+  "barcode": "${barcode || 'N/A'}",
+  "name": "<Exact real product name>",
+  "brand": "<Exact real brand owner company name>",
+  "category": "<Food Category>",
+  "servingSize": "<Standard serving size>",
+  "score": <Calculated score 10-98 based on nutrients>,
+  "rating": "<Green|Yellow|Red>",
+  "verdict": "<Nutritional summary verdict based on FSSAI standards>",
+  "caloriesPerServing": <Numeric kcal>,
+  "macros": {
+    "protein": "<Protein value, e.g. 6.0g>",
+    "carbs": "<Carbs value, e.g. 68.0g>",
+    "fat": "<Fat value, e.g. 18.0g>",
+    "saturatedFat": "<Sat fat value, e.g. 8.5g>",
+    "sugar": "<Sugar value, e.g. 24.0g>",
+    "sodium": "<Sodium value in mg, e.g. 220mg>",
+    "fiber": "<Fiber value, e.g. 1.5g>"
+  },
+  "productInfo": {
+    "productName": "<Exact product name>",
+    "brand": "<Exact brand owner company>",
+    "category": "<Food Category>",
+    "netQuantity": "<Net quantity>",
+    "mrp": "<MRP ₹>",
+    "manufacturer": "<Exact Manufacturer name, address & FSSAI Lic No>",
+    "countryOfOrigin": "India 🇮🇳",
+    "dateInfo": "Best Before 6 to 9 months from MFD",
+    "consumerCare": "<Customer care helpline & email>"
+  },
+  "pros": ["<Nutritional advantage 1>", "<Nutritional advantage 2>"],
+  "cons": ["<Nutritional concern 1>", "<Nutritional concern 2>"],
+  "shortTermEffects": ["<Short term effect 1>"],
+  "longTermEffects": ["<Long term effect 1>"],
+  "additives": []
+}
+
+Return ONLY valid JSON. No markdown wrappers.
+`;
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${clientApiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptText }] }],
+            generationConfig: {
+              temperature: 0.1,
+              response_mime_type: "application/json"
+            }
+          })
+        }
+      );
+
+      if (response.ok) {
+        const resData = await response.json();
+        const candidateText = resData.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (candidateText) {
+          const parsed = JSON.parse(candidateText.trim());
+          if (parsed && parsed.name && parsed.name !== "Packaged Food Item") {
+            return parsed;
+          }
+        }
+      }
+    } catch (clientErr) {
+      console.warn("Direct Gemini lookup fallback failed:", clientErr);
+    }
+  }
+
   return null;
 }

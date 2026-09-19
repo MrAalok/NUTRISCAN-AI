@@ -79,7 +79,7 @@ export default function ScannerHero({ onSelectProduct, isScanning, setIsScanning
     if (realProduct && realProduct.name && realProduct.name !== "Packaged Food Item") {
       onSelectProduct(realProduct);
     } else {
-      setScanError(`Barcode "${code}" is not in offline DB. Please click the Search tab above to search by product name (e.g. Maggi, Lays, Oats).`);
+      setScanError(`Barcode "${code}" not found in database. Please upload/take a packet photo or search by product name (e.g. Maggi, Lay's, Oats).`);
     }
   };
 
